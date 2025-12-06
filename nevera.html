@@ -1,0 +1,221 @@
+<!Doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rimac Nevera — Drive Nation</title>
+
+  <style>
+    :root{
+      --bg: #fff7f7;
+      --card: #f3e6e6;
+      --accent: rosybrown;
+      --dark: #3b2f2f;
+      --muted: #6b5959;
+      --radius: 12px;
+      --maxw: 900px;
+      font-family: Inter, system-ui, Arial;
+    }
+
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#fff3f3 120px);
+      color:var(--dark);
+      display:flex;
+      justify-content:center;
+      padding:36px 16px;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+      background:linear-gradient(180deg,rgba(255,255,255,0.85),var(--card));
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(101,70,70,0.08);
+      border:1px solid rgba(196,130,130,0.12);
+    }
+
+    header{
+      padding:28px 32px;
+      display:flex;
+      align-items:center;
+      gap:20px;
+      background:linear-gradient(90deg,rgba(199,111,111,0.12),rgba(255,255,255,0.02));
+    }
+
+    .logo{
+      width:84px;
+      height:84px;
+      border-radius:14px;
+      background:linear-gradient(135deg,rgba(199,111,111,0.14),rgba(178,130,130,0.06));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      font-weight:700;
+      color:var(--dark);
+      box-shadow:0 6px 18px rgba(200,120,120,0.06);
+    }
+
+    h1{margin:0;font-size:20px;color:var(--dark);}
+    p.lead{margin:6px 0 0;font-size:14px;color:var(--muted);}
+
+    .container{
+      padding:28px 32px;
+      display:grid;
+      gap:20px;
+    }
+
+    .card{
+      background:white;
+      padding:18px;
+      border-radius:var(--radius);
+      box-shadow:0 6px 18px rgba(120,90,90,0.04);
+      border:1px solid rgba(200,140,140,0.06);
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+      margin-bottom:8px;
+    }
+
+    .badge{
+      padding:6px 10px;
+      background:linear-gradient(180deg,rgba(199,111,111,0.12),rgba(199,111,111,0.06));
+      border-radius:8px;
+      font-weight:600;
+      font-size:13px;
+      color:var(--dark);
+      border:1px solid rgba(199,111,111,0.06);
+    }
+
+    h2{margin:4px 0 12px;font-size:18px;color:var(--dark);}
+
+    ul.specs{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    ul.specs li{
+      background:linear-gradient(180deg,#fff,#fff7f7);
+      padding:10px;
+      border-radius:10px;
+      color:var(--muted);
+      font-size:14px;
+      border:1px solid rgba(200,140,140,0.04);
+    }
+
+    @media(min-width:720px){
+      ul.specs{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+      }
+    }
+
+    .history p{
+      margin:10px 0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.5;
+    }
+
+    img.car{
+      max-width:100%;
+      border-radius:10px;
+      box-shadow:0 10px 30px rgba(120,80,80,0.06);
+    }
+
+    footer{
+      padding:20px 32px;
+      display:flex;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:13px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="logo">Drive<br>Nation</div>
+      <div>
+        <h1>Rimac Nevera</h1>
+        <p class="lead">The electric hypercar redefining acceleration and technology.</p>
+      </div>
+    </header>
+
+    <div class="container">
+
+      <!-- Overview -->
+      <section class="card">
+        <div class="meta">
+          <div class="badge">All-Electric</div>
+          <div class="badge">1,900+ HP</div>
+          <div class="badge">Record Setter</div>
+        </div>
+
+        <h2>Quick overview</h2>
+        <p class="lead">
+          The Rimac Nevera is a fully electric hypercar that delivers insane acceleration, cutting-edge battery technology, 
+          and unmatched control using individual motors at each wheel. It's one of the fastest accelerating cars ever made.
+        </p>
+      </section>
+
+      <!-- History -->
+      <section class="card history">
+        <h2>History — how it came to be</h2>
+
+        <p>
+          Rimac began as a small Croatian startup founded by Mate Rimac, an engineer passionate about electric performance. 
+          Over time, the company developed advanced battery systems and electric drivetrains that caught global attention.
+        </p>
+
+        <p>
+          The Nevera was created to showcase Rimac’s engineering power.  
+          Designed with a carbon monocoque, a high-density battery pack, and four independent motors,  
+          it brings Formula-1-like responsiveness to a road-legal hypercar.
+        </p>
+      </section>
+
+      <!-- Specs -->
+      <section class="card">
+        <h2>Key specifications</h2>
+
+        <ul class="specs">
+          <li><strong>Motors:</strong> 4 electric motors (one per wheel)</li>
+          <li><strong>Total power:</strong> 1,914 hp</li>
+          <li><strong>Top speed:</strong> ~412 km/h</li>
+          <li><strong>0–100 km/h:</strong> ~1.9 seconds</li>
+          <li><strong>Battery:</strong> 120 kWh lithium-manganese pack</li>
+          <li><strong>Range:</strong> ~500+ km (varies by driving)</li>
+          <li><strong>Drive:</strong> All-wheel torque-vectoring</li>
+          <li><strong>Production:</strong> Limited to 150 units</li>
+        </ul>
+      </section>
+
+      <!-- Why it matters -->
+      <section class="card">
+        <h2>Why it matters</h2>
+        <p>
+          The Nevera proves that electric hypercars can outperform combustion engines in acceleration, control, 
+          and efficiency. It blends luxury with technology and sets multiple world records, 
+          making it one of the most advanced cars ever built.
+        </p>
+      </section>
+    </div>
+<img src="C:\Users\Samue\Desktop\Sublime Text\Pictures for Supercar Websites\rimac.jpg" alt="Aptera" width="900">
+    <footer>
+      <div>Designed by PixelForge Studios • Drive Nation</div>
+    </footer>
+
+  </div>
+</body>
+</html>

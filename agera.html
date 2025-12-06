@@ -1,0 +1,228 @@
+<!Doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Koenigsegg Regera RS — Drive Nation</title>
+  <style>
+    /* RosyBrown Theme */
+    :root{
+      --bg: #fff7f7;
+      --card: #f3e6e6;
+      --accent: rosybrown;
+      --dark: #3b2f2f;
+      --muted: #6b5959;
+      --highlight: #c66b6b;
+      --radius: 12px;
+      --maxw: 900px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    body{
+      margin:0;
+      background: linear-gradient(180deg, var(--bg), #fff3f3 120px);
+      color: var(--dark);
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:36px 16px;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), var(--card));
+      border-radius:20px;
+      box-shadow: 0 10px 30px rgba(101,70,70,0.08);
+      overflow:hidden;
+      border: 1px solid rgba(196,130,130,0.12);
+    }
+
+    header{
+      background: linear-gradient(90deg, rgba(199,111,111,0.12), rgba(255,255,255,0.02));
+      padding:28px 32px;
+      display:flex;
+      gap:20px;
+      align-items:center;
+    }
+
+    .logo{
+      width:84px;
+      height:84px;
+      border-radius:14px;
+      background: linear-gradient(135deg, rgba(199,111,111,0.14), rgba(178,130,130,0.06));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      color:var(--dark);
+      box-shadow: 0 6px 18px rgba(200,120,120,0.06);
+      font-size:18px;
+    }
+
+    h1{
+      margin:0;
+      font-size:20px;
+      color:var(--dark);
+      letter-spacing:0.2px;
+    }
+
+    p.lead{
+      margin:6px 0 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .container{
+      padding:28px 32px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:20px;
+    }
+
+    .card{
+      background: white;
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow: 0 6px 18px rgba(120,90,90,0.04);
+      border: 1px solid rgba(200,140,140,0.06);
+    }
+
+    .meta{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:8px;
+    }
+
+    .badge{
+      background: linear-gradient(180deg, rgba(199,111,111,0.12), rgba(199,111,111,0.06));
+      color:var(--dark);
+      padding:6px 10px;
+      border-radius:8px;
+      font-weight:600;
+      font-size:13px;
+      border:1px solid rgba(199,111,111,0.06);
+    }
+
+    h2{
+      margin:4px 0 12px 0;
+      font-size:18px;
+      color:var(--dark);
+    }
+
+    ul.specs{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:10px;
+    }
+
+    ul.specs li{
+      background: linear-gradient(180deg, #fff, #fff7f7);
+      padding:10px;
+      border-radius:10px;
+      font-size:14px;
+      color:var(--muted);
+      border:1px solid rgba(200,140,140,0.04);
+    }
+
+    .history p{
+      margin:10px 0;
+      color:var(--muted);
+      line-height:1.5;
+      font-size:15px;
+    }
+
+    footer{
+      padding:20px 32px;
+      display:flex;
+      gap:20px;
+      align-items:center;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    img.car{
+      max-width:100%;
+      height:auto;
+      border-radius:10px;
+      display:block;
+      box-shadow: 0 10px 30px rgba(120,80,80,0.06);
+    }
+
+    @media (min-width:720px){
+      .container{ gap:22px; }
+      ul.specs{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">Drive<br>Nation</div>
+      <div>
+        <h1>Koenigsegg Regera RS</h1>
+        <p class="lead">High-tech hybrid power, extreme acceleration, and a rosybrown design theme.</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="card">
+        <div class="meta">
+          <div class="badge">Hybrid Hypercar</div>
+          <div class="badge">Direct Drive</div>
+          <div class="badge">Limited Edition</div>
+        </div>
+
+        <h2>Quick overview</h2>
+        <p class="lead">
+          The Koenigsegg Regera RS is a high-performance evolution of the Regera, blending monstrous hybrid power with luxury, technology and record-breaking acceleration. Designed to eliminate traditional gearing, it delivers instant torque and extreme efficiency.
+        </p>
+      </section>
+
+      <section class="card history">
+        <h2>History — how it came to be</h2>
+
+        <p>
+          The standard Koenigsegg Regera debuted in 2015 as a revolutionary hybrid megacar featuring the Koenigsegg Direct Drive (KDD) system. Its mission was to replace traditional multi-gear transmissions with a single-speed solution, using electric motors to fill torque gaps instantly.
+        </p>
+
+        <p>
+          The Regera RS concept builds on that legacy, incorporating lighter materials, refined cooling, updated software and even more aggressive aerodynamics. Inspired by the success of Koenigsegg’s “RS” models such as the Agera RS, the Regera RS aims to push acceleration, handling and high-speed stability to new heights.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Key specifications</h2>
+        <ul class="specs">
+          <li><strong>Engine:</strong> 5.0L twin-turbo V8 hybrid</li>
+          <li><strong>Electric power:</strong> Three motors + battery assist</li>
+          <li><strong>Total output:</strong> ≈1500–1600 hp (combined)</li>
+          <li><strong>Top speed:</strong> ~410 km/h (electronically influenced)</li>
+          <li><strong>0–100 km/h:</strong> ~2.8 seconds</li>
+          <li><strong>0–400–0 record:</strong> Regera platform known for world-leading times</li>
+          <li><strong>Drive:</strong> Rear-wheel drive with hybrid torque fill</li>
+          <li><strong>Price:</strong> Multi-million dollar hypercar</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Why it matters</h2>
+        <p>
+          The Regera RS represents Koenigsegg’s pursuit of hybrid innovation without compromise. It combines insane performance with elegant engineering, proving that hybrid systems can enhance—not replace—raw combustion power.
+        </p>
+      </section>
+    </div>
+<img src="C:\Users\Samue\Desktop\Sublime Text\Pictures for Supercar Websites\agera.jpg" alt="Aptera" width="900">
+    <footer>
+      <div>Designed by PixelForge Studios • Drive Nation</div>
+    </footer>
+  </div>
+</body>
+</html>

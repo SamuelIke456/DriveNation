@@ -1,0 +1,212 @@
+<!-- save as: drive-nation-2025-news.html -->
+<!Doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DriveNation — Top Car News 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#1f1414;
+      --rosy:#BC8F8F;
+      --rosy-2:#c99a9a;
+      --card:#fff8f8;
+      --muted:#4a3636;
+      --glass: rgba(255,255,255,0.06);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;
+      background: linear-gradient(180deg,var(--bg1) 0%, #3b2a2a 65%);
+      color:var(--card);
+      padding:40px;
+    }
+
+    .page{
+      max-width:1100px;
+      margin:0 auto;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      margin-bottom:24px;
+    }
+    .logo{
+      width:72px;height:72px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,var(--rosy),var(--rosy-2));
+      color:#2b1515;font-weight:800;font-size:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.35);
+    }
+    header h1{margin:0;font-size:20px}
+    header p{margin:0;color:#f3e9e9;opacity:0.9;font-size:13px}
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,250,250,0.95));
+      color:var(--muted);
+      border-radius:14px;
+      padding:18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      border:1px solid rgba(188,143,143,0.08);
+      position:relative;
+      overflow:hidden;
+      transition: transform .28s cubic-bezier(.2,.9,.24,1), box-shadow .28s;
+    }
+    .card:hover{transform:translateY(-8px); box-shadow:0 22px 50px rgba(0,0,0,0.5)}
+    .tag{
+      display:inline-block;padding:6px 10px;border-radius:999px;font-weight:700;
+      background:var(--rosy-2); color:#2b1515; font-size:12px;
+      position:absolute; right:16px; top:16px;
+      box-shadow:0 8px 18px rgba(188,143,143,0.12);
+    }
+    .card h2{margin:0 0 8px 0;font-size:18px;color:#4a2f2f}
+    .meta{font-size:13px;color:#7a5a5a;margin-bottom:10px}
+    .excerpt{font-size:14px;line-height:1.45;margin-bottom:12px;color:#5b3f3f}
+    .cta{
+      display:inline-block;font-weight:700;padding:8px 12px;border-radius:10px;
+      background:linear-gradient(90deg,var(--rosy),var(--rosy-2)); color:white;text-decoration:none;
+      box-shadow: 0 8px 18px rgba(176,127,127,0.12);
+      font-size:13px;
+    }
+    footer{margin-top:28px;color:#f6eded;font-size:13px;opacity:0.9;text-align:center}
+    .source{display:block;margin-top:10px;font-size:12px;color:#8a6161}
+    @media (max-width:640px){body{padding:18px}}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">DN</div>
+      <div>
+        <h1>DriveNation — Notable Car News (2025)</h1>
+        <p>Curated — important launches, recalls, software updates, and industry moves in 2025.</p>
+      </div>
+    </header>
+
+    <section class="grid">
+      <!-- Tesla: strategy & pricing moves (Oct 2025 coverage) -->
+      <article class="card">
+        <span class="tag">Tesla</span>
+        <h2>Tesla shifts model strategy, introduces lower-priced trims</h2>
+        <div class="meta">Oct 2025 — strategic changes and new lower-priced trims announced</div>
+        <div class="excerpt">
+          Tesla scaled back a prior $25k EV project and instead introduced stripped-down Model 3 and Model Y trims priced around the high $30k — a notable change in product strategy that reflects Tesla's focus on margin and streamlined lineups.
+        </div>
+        <a class="cta" href="https://www.reuters.com/business/autos-transportation/teslas-big-gamble-that-introducing-new-models-no-longer-matters-2025-10-23/" target="_blank" rel="noopener">Read source</a>
+        <span class="source">Source: Reuters — Oct 23, 2025</span>
+      </article>
+
+      <!-- Ford: Power Promise extension -->
+      <article class="card">
+        <span class="tag">Ford</span>
+        <h2>Ford extends free at-home EV charger promotion</h2>
+        <div class="meta">Jan–Mar 2025 promotion extension announced</div>
+        <div class="excerpt">
+          Ford extended its "Power Promise" free home charger and installation offer through March 31, 2025 for qualifying EV buyers — a move to encourage EV adoption and improve the ownership experience.
+        </div>
+        <a class="cta" href="https://www.theverge.com/2025/1/3/24335123/ford-power-promise-2025-free-ev-charger-extension" target="_blank" rel="noopener">Read source</a>
+        <span class="source">Source: The Verge — Jan 3, 2025</span>
+      </article>
+
+      <!-- Rivian: supplier park & R2 prep -->
+      <article class="card">
+        <span class="tag">Rivian</span>
+        <h2>Rivian invests $120M supplier park to scale for R2</h2>
+        <div class="meta">May 2025 — supplier park announcement</div>
+        <div class="excerpt">
+          Rivian announced a $120 million supplier park near its Normal, Illinois plant to reduce costs and support production ramp for the more affordable R2 SUV and future models — part of Rivian's scaling plans amid delivery challenges.
+        </div>
+        <a class="cta" href="https://www.reuters.com/business/autos-transportation/rivian-build-120-million-illinois-supplier-park-lower-tariff-related-costs-2025-05-05/" target="_blank" rel="noopener">Read source</a>
+        <span class="source">Source: Reuters — May 5, 2025</span>
+      </article>
+
+      <!-- Massive recall trend in 2025 -->
+      <article class="card">
+        <span class="tag">Industry</span>
+        <h2>2025 sees a surge in vehicle recalls</h2>
+        <div class="meta">Q3 2025 recall statistics</div>
+        <div class="excerpt">
+          2025 experienced a large increase in recall activity — Q3 alone reported millions of vehicles across many manufacturers recalled for safety and software issues, making recalls one of the year's defining industry stories.
+        </div>
+        <a class="cta" href="https://www.bizzycar.com/blog/automotive-recall-alert-8.5-million-vehicles-recalled-in-q3-2025" target="_blank" rel="noopener">Read source</a>
+        <span class="source">Source: BizzyCar recall report — Q3 2025</span>
+      </article>
+
+      <!-- Ford F-150 Lightning Flash -->
+      <article class="card">
+        <span class="tag">Ford</span>
+        <h2>2025 F-150 Lightning Flash review — high performance EV truck</h2>
+        <div class="meta">Aug 28, 2025 — review & first drives</div>
+        <div class="excerpt">
+          The 2025 F-150 Lightning Flash earned praise for strong power (536 hp) and competitive range (~300 miles), underscoring the continued rise of performance-focused electric trucks.
+        </div>
+        <a class="cta" href="https://www.caranddriver.com/reviews/a65909777/2025-ford-f-150-lightning-flash-drive/" target="_blank" rel="noopener">Read source</a>
+        <span class="source">Source: Car & Driver — Aug 28, 2025</span>
+      </article>
+
+      <!-- Rivian software / hands-free -->
+      <article class="card">
+        <span class="tag">Rivian</span>
+        <h2>Rivian announces hands-free driver assist for 2025</h2>
+        <div class="meta">Jan 2025 — hands-free assistance announced</div>
+        <div class="excerpt">
+          Rivian said it would add a hands-free driving assist to R1 vehicles in 2025 (with an "eyes-off" capability expected later), signaling the continued software-led competition in driver assistance features.
+        </div>
+        <a class="cta" href="https://www.theverge.com/2025/1/24/24351228/rivian-hands-free-eyes-off-adas-driver-assist-2026" target="_blank" rel="noopener">Read source</a>
+        <span class="source">Source: The Verge — Jan 24, 2025</span>
+      </article>
+
+      <!-- Rivian spin-off Also Inc -->
+      <article class="card">
+        <span class="tag">Business</span>
+        <h2>Rivian spins off micromobility project into Also Inc.</h2>
+        <div class="meta">2025 — strategic spin-off announced</div>
+        <div class="excerpt">
+          Rivian spun off a micromobility initiative into a new company (Also Inc.), keeping a stake while pursuing small-vehicle and urban mobility opportunities beyond full-size EVs.
+        </div>
+        <a class="cta" href="https://www.investopedia.com/rivian-unveils-spins-off-secret-micromobility-project-11703550" target="_blank" rel="noopener">Read source</a>
+        <span class="source">Source: Investopedia — 2025</span>
+      </article>
+
+      <!-- Rivian software patch 2025.38 (specific changelog reporting) -->
+      <article class="card">
+        <span class="tag">Software</span>
+        <h2>Rivian 2025.38 software update — charging fixes & QoL</h2>
+        <div class="meta">Oct 2025 — update notes / forum reports</div>
+        <div class="excerpt">
+          Community and company channels reported Rivian's 2025.38 software update addressing charging schedule bugs and other quality-of-life fixes for R1 owners — an example of fast-moving OTA improvement cycles.
+        </div>
+        <a class="cta" href="https://riviantrackr.com/news/whats-coming-in-rivian-software-2025-38/" target="_blank" rel="noopener">Read source</a>
+        <span class="source">Source: RivianTrackr / community reporting — Oct 2025</span>
+      </article>
+
+      <!-- Industry finance / Tesla Q3 note (example) -->
+      <article class="card">
+        <span class="tag">Finance</span>
+        <h2>Tesla Q3 2025 update: revenue & outlook (high-level)</h2>
+        <div class="meta">Oct 2025 — quarterly update</div>
+        <div class="excerpt">
+          Tesla's Q3 2025 update highlighted its revenue and earnings results as the company adjusts production plans and product strategy to evolving demand and regulatory realities.
+        </div>
+        <a class="cta" href="https://www.teslarati.com/tesla-q3-update-reaffirms-not-just-a-car-company-anymore/" target="_blank" rel="noopener">Read source</a>
+        <span class="source">Source: Teslarati — Oct 2025</span>
+      </article>
+    </section>
+
+    <footer>
+      Compiled: Oct 23, 2025 — Sources include Reuters, The Verge, Car & Driver, BizzyCar, Investopedia, RivianTrackr.
+    </footer>
+  </div>
+</body>
+</html>

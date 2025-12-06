@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Drive Nation — Ultimate Car Quiz (200 Qs)</title>
+<style>
+/* ===== RosyBrown Themed Quiz Styles ===== */
+:root{
+  --bg1: #fff7f7;
+  --rosy-1: #b98b8b;
+  --rosy-2: #d6b0b0;
+  --accent: #a66c6c;
+  --text: #3e1f1f;
+  --card: #ffffff;
+  --soft: rgba(188,143,143,0.12);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,var(--bg1), #fff0f0 60%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:28px 18px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  min-height:100vh;
+}
+
+/* Container */
+.wrapper{
+  width:100%;
+  max-width:980px;
+  background:linear-gradient(180deg, rgba(255,250,250,0.98), rgba(255,245,245,0.96));
+  border-radius:16px;
+  box-shadow: 0 18px 50px rgba(160,120,120,0.12);
+  padding:22px;
+  border: 1px solid rgba(188,143,143,0.12);
+}
+
+/* Header */
+.header{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+.brand {
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.logo{
+  width:56px;
+  height:56px;
+  border-radius:12px;
+  background: linear-gradient(135deg,var(--rosy-1),var(--rosy-2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:800;
+  font-size:18px;
+  box-shadow: 0 6px 18px rgba(169,110,110,0.18);
+}
+.title{
+  font-size:20px;
+  font-weight:700;
+  color:var(--accent);
+  letter-spacing:0.4px;
+}
+.subtitle{
+  font-size:13px;
+  color:#6a3b3b;
+  opacity:0.95;
+}
+
+/* Card */
+.card{
+  background:var(--card);
+  border-radius:14px;
+  padding:20px;
+  box-shadow: 0 10px 30px rgba(188,143,143,0.06);
+  border:1px solid rgba(188,143,143,0.06);
+}
+
+/* Intro */
+.intro{
+  margin-bottom:18px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+}
+.intro p{margin:0;font-size:15px;line-height:1.6;color:#4f2b2b}
+
+/* Quiz area */
+.quiz-top{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.qnum{
+  font-weight:700;
+  color:var(--accent);
+}
+.progress{
+  flex:1;
+  height:12px;
+  background:var(--soft);
+  border-radius:999px;
+  overflow:hidden;
+  margin-left:12px;
+  margin-right:12px;
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--rosy-1),var(--rosy-2));
+  border-radius:999px;
+  transition:width .35s ease;
+}
+
+/* Question text */
+.question{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:16px;
+  color:#4a2323;
+}
+
+/* Options */
+.options{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+.option{
+  background: linear-gradient(180deg,#fff0f0,#fff6f6);
+  border-radius:12px;
+  padding:14px 16px;
+  cursor:pointer;
+  border:1px solid rgba(188,143,143,0.18);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.option:hover{ transform:translateY(-4px); box-shadow:0 14px 30px rgba(188,143,143,0.08); }
+.opt-letter{
+  width:36px;height:36px;border-radius:10px;
+  background: linear-gradient(180deg,#f9dfdf,#ffecec);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--accent);
+  border:1px solid rgba(188,143,143,0.14);
+}
+.opt-text{font-size:16px;color:#4b2626}
+
+/* Selected / correct / wrong */
+.option.selected{ box-shadow:0 10px 26px rgba(168,110,110,0.12); }
+.option.correct{ background:linear-gradient(180deg,#e6f7ea,#d8f2db); border-color: rgba(80,170,100,0.18); }
+.option.wrong{ background:linear-gradient(180deg,#fde8e8,#fbdcdc); border-color: rgba(220,100,100,0.12); opacity:0.98; }
+
+/* Controls */
+.controls{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:16px;
+  justify-content:space-between;
+}
+.btn{
+  padding:10px 18px;
+  border-radius:12px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(90deg,var(--rosy-1),var(--rosy-2));
+  color:white;
+  box-shadow: 0 8px 22px rgba(169,110,110,0.15);
+}
+.btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; box-shadow:none; }
+.small{ background:transparent; color:var(--accent); font-weight:600; border-radius:10px; padding:8px 10px; border:1px solid rgba(188,143,143,0.08); }
+
+/* Footer / results */
+.results{
+  text-align:center;padding:18px;border-radius:12px;margin-top:12px;background:linear-gradient(180deg,#fffdfd,#fff6f6);border:1px solid rgba(188,143,143,0.06);
+}
+.score{
+  font-size:26px;font-weight:800;color:var(--accent);
+  margin-bottom:6px;
+}
+.detail{ color:#5b2f2f; margin-bottom:10px; }
+
+/* Responsive */
+@media (max-width:640px){
+  .question{ font-size:18px }
+  .brand .title{ font-size:18px }
+}
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <div class="brand">
+        <div class="logo">DN</div>
+        <div>
+          <div class="title">Drive Nation — Car Quiz</div>
+          <div class="subtitle">200 easy & fun car questions</div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:700;color:#6b3434">Test your car knowledge!</div>
+        <div style="font-size:12px;color:#7b4747">Tap an option to answer</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="intro">
+        <p><strong>Welcome!</strong> This quiz contains 200 simple and interesting car questions suitable for everyone. Each question has four options — pick the one you think is right. Your score will be shown at the end.</p>
+        <p>Have fun and learn as you go. Use the Next button to move forward. You can restart at any time.</p>
+      </div>
+
+      <div class="quiz-top">
+        <div class="qnum">Question <span id="qIndex">1</span> / 200</div>
+        <div class="progress" title="Progress">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <div style="min-width:90px;text-align:right;color:#6b3434;font-weight:700" id="scoreView">Score: 0</div>
+      </div>
+
+      <div id="quizArea">
+        <div id="questionText" class="question">Loading question...</div>
+        <div class="options">
+          <div id="optA" class="option" data-letter="A"><div class="opt-letter">A</div><div class="opt-text" id="textA"></div></div>
+          <div id="optB" class="option" data-letter="B"><div class="opt-letter">B</div><div class="opt-text" id="textB"></div></div>
+          <div id="optC" class="option" data-letter="C"><div class="opt-letter">C</div><div class="opt-text" id="textC"></div></div>
+          <div id="optD" class="option" data-letter="D"><div class="opt-letter">D</div><div class="opt-text" id="textD"></div></div>
+        </div>
+
+        <div class="controls">
+          <button id="prevBtn" class="small" onclick="prevQuestion()">Prev</button>
+          <div style="flex:1"></div>
+          <button id="nextBtn" class="btn" onclick="nextQuestion()" disabled>Next</button>
+        </div>
+      </div>
+
+      <div id="results" class="results" style="display:none;">
+        <div class="score" id="finalScore">0 / 200</div>
+        <div class="detail" id="percentText">0%</div>
+        <button class="btn" onclick="restart()">Restart Quiz</button>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+/* ===== Quiz Data (200 easy car questions) ===== */
+/* Each entry: {question, A, B, C, D, answer} answer is "A"/"B"/"C"/"D" */
+const quizData = [
+{question:"What part of the car is used to steer?",A:"Steering wheel",B:"Brake pedal",C:"Clutch",D:"Horn",answer:"A"},
+{question:"What part touches the road?",A:"Windshield",B:"Tire",C:"Antenna",D:"Roof",answer:"B"},
+{question:"Which fuel do most petrol cars use?",A:"Petrol",B:"Electricity",C:"Water",D:"Gasoline is same as petrol",answer:"D"},
+{question:"What do you press to make a car slow down?",A:"Accelerator",B:"Horn",C:"Brake",D:"Wiper",answer:"C"},
+{question:"What light helps you see at night while driving?",A:"Headlights",B:"Brake lights",C:"Interior lights",D:"Fog lamp only",answer:"A"},
+{question:"What safety device keeps you in your seat?",A:"Seat belt",B:"Mirror",C:"Radio",D:"Air freshener",answer:"A"},
+{question:"Which sign usually means STOP?",A:"Green sign",B:"Blue sign",C:"Red sign",D:"Yellow sign",answer:"C"},
+{question:"Which part tells you speed?",A:"Speedometer",B:"Tachometer",C:"Odometer",D:"GPS",answer:"A"},
+{question:"Which fluid cools the engine?",A:"Oil",B:"Brake fluid",C:"Coolant",D:"Windshield washer fluid",answer:"C"},
+{question:"Which device warns other drivers with sound?",A:"Horn",B:"Headlights",C:"Turn signal",D:"ABS",answer:"A"},
+{question:"What do you do with indicator/turn signal?",A:"Show lane change",B:"Open door",C:"Start engine",D:"Lock car",answer:"A"},
+{question:"Which is a car brand?",A:"Cheetah",B:"Toyota",C:"Bicycle",D:"Ladder",answer:"B"},
+{question:"Which car is electric only?",A:"Ford Mustang (classic)",B:"Tesla Model S",C:"Toyota Camry (gas)",D:"Honda Civic (gas)",answer:"B"},
+{question:"Which item cleans the windshield?",A:"Wiper",B:"Mirror",C:"Horn",D:"Tire",answer:"A"},
+{question:"Which control changes gears in a manual car?",A:"Brake",B:"Steering wheel",C:"Gear stick (gear lever)",D:"Indicator",answer:"C"},
+{question:"Which part stores fuel?",A:"Trunk",B:"Fuel tank",C:"Bumper",D:"Radiator",answer:"B"},
+{question:"Which light turns on when braking?",A:"Headlights",B:"Brake lights",C:"Fog lights",D:"Reverse lights",answer:"B"},
+{question:"What is the trunk used for?",A:"Engine",B:"Storage space",C:"Seating",D:"Steering",answer:"B"},
+{question:"Which is used to start most modern cars?",A:"Push button or key",B:"Shovel",C:"Cup",D:"Mirror",answer:"A"},
+{question:"What is the color of a common yield sign's background?",A:"Red",B:"Blue",C:"Yellow",D:"White with red",answer:"D"},
+{question:"Which instrument shows engine speed (RPM)?",A:"Odometer",B:"Tachometer",C:"Fuel gauge",D:"Speedometer",answer:"B"},
+{question:"What do you check before a long drive?",A:"Tires, fuel and lights",B:"Only radio",C:"Only seat",D:"Only phone",answer:"A"},
+{question:"Which car part helps stop the car quickly?",A:"Radio",B:"Brake system",C:"Window",D:"Rear seat",answer:"B"},
+{question:"What color are commonly road lane markings?",A:"Purple",B:"Green",C:"White or yellow",D:"Pink",answer:"C"},
+{question:"Which system stops wheels from locking during heavy braking?",A:"ABS",B:"AC",C:"GPS",D:"ESP",answer:"A"},
+{question:"Which brand makes the Corolla?",A:"BMW",B:"Toyota",C:"Audi",D:"Ferrari",answer:"B"},
+{question:"What does 'EV' stand for in cars?",A:"Extra Vehicle",B:"Electric Vehicle",C:"Engine Valve",D:"Emergency Vehicle",answer:"B"},
+{question:"Which fuel gauge shows fuel left?",A:"Tachometer",B:"Speedometer",C:"Fuel gauge",D:"Clock",answer:"C"},
+{question:"What is the purpose of headlights during rain?",A:"Decorative",B:"Help see the road",C:"Play music",D:"Hold items",answer:"B"},
+{question:"Which car part opens the hood?",A:"Trunk",B:"Hood release lever",C:"Sunroof",D:"Mirror",answer:"B"},
+{question:"Which car is famous for fast speed: Ferrari or Tractor?",A:"Tractor",B:"Ferrari",C:"Both same",D:"Neither",answer:"B"},
+{question:"Which is an SUV type vehicle?",A:"Sports Utility Vehicle",B:"Small bicycle",C:"Skateboard",D:"Motorboat",answer:"A"},
+{question:"Which control turns on windshield wipers?",A:"Gear",B:"Wiper stalk",C:"Seat belt",D:"Trunk",answer:"B"},
+{question:"What tool measures tyre pressure?",A:"Thermometer",B:"Tire pressure gauge",C:"Ruler",D:"Clock",answer:"B"},
+{question:"Which light signals you will turn left or right?",A:"Hazard lights",B:"Turn signals/indicators",C:"Headlights",D:"Brake lights",answer:"B"},
+{question:"What color is often used for emergency vehicles' lights?",A:"Red and blue",B:"Brown",C:"Green",D:"Pink",answer:"A"},
+{question:"What is the seat in front for driver called?",A:"Passenger seat",B:"Driver's seat",C:"Trunk",D:"Roof",answer:"B"},
+{question:"What do mechanics often change during service?",A:"Engine oil",B:"Radio song",C:"Seat color",D:"Dashboard clock",answer:"A"},
+{question:"Which car brand's logo is four rings?",A:"Audi",B:"Toyota",C:"BMW",D:"Kia",answer:"A"},
+{question:"What part helps cool the engine?",A:"Radiator",B:"Tire",C:"Gearbox",D:"Seat",answer:"A"},
+{question:"Which light helps when reversing?",A:"Brake light",B:"Reverse light",C:"Hazard",D:"Fog light",answer:"B"},
+{question:"What should you wear to stay safe in a crash?",A:"Hat",B:"Seat belt",C:"Shoes",D:"Sunglasses",answer:"B"},
+{question:"What type of vehicle carries many passengers in the city?",A:"Bus",B:"Bicycle",C:"SUV",D:"Boat",answer:"A"},
+{question:"What does 'MPG' relate to?",A:"Miles per gallon (fuel economy)",B:"Music per game",C:"Money per gallon",D:"Minutes per gas",answer:"A"},
+{question:"Which system helps keep car stable on curves (traction)?",A:"Traction control",B:"Radio",C:"Horn",D:"Seat heater",answer:"A"},
+{question:"Which car part opens the door from inside?",A:"Handle",B:"Tire",C:"Radio",D:"Gear",answer:"A"},
+{question:"Which device tells how far car has traveled?",A:"Speedometer",B:"Odometer",C:"Tachometer",D:"Fuel gauge",answer:"B"},
+{question:"What type of light is used in foggy weather?",A:"Fog lights",B:"Brake lights",C:"High beam only",D:"Dashboard light",answer:"A"},
+{question:"Which vehicle is typically used for off-road?",A:"Sedan",B:"SUV or 4x4",C:"Sports car",D:"Convertible",answer:"B"},
+{question:"Which company makes the Civic?",A:"Honda",B:"Mercedes",C:"Nissan",D:"Hyundai",answer:"A"},
+{question:"What do you use to speed up a car?",A:"Brake",B:"Accelerator",C:"Horn",D:"Wipers",answer:"B"},
+{question:"Which part displays engine temperature?",A:"Fuel gauge",B:"Temperature gauge",C:"Odometer",D:"Clock",answer:"B"},
+{question:"Which car is known for being very small and city-friendly?",A:"Minivan",B:"Compact car",C:"Truck",D:"Lorry",answer:"B"},
+{question:"What is a common color for school buses in many countries?",A:"Yellow",B:"Red",C:"Blue",D:"Green",answer:"A"},
+{question:"Which car opens at the top and is called a convertible?",A:"Hatchback",B:"Sedan",C:"Convertible",D:"Minivan",answer:"C"},
+{question:"Which car part reduces noise and vibration in the engine system?",A:"Muffler",B:"Radio",C:"Windshield",D:"Wiper",answer:"A"},
+{question:"Which system helps when brakes fail by pumping them?",A:"ABS",B:"Sunroof",C:"AC",D:"Stereo",answer:"A"},
+{question:"Which control do you use with your foot in manual cars to change gear?",A:"Handbrake",B:"Clutch",C:"Horn",D:"Accelerator",answer:"B"},
+{question:"Which is the main long-distance road in many countries called?",A:"Highway or motorway",B:"Alley",C:"Driveway",D:"Sidewalk",answer:"A"},
+{question:"Which sign shows you a one-way street?",A:"Two arrows opposite",B:"Single arrow direction",C:"Red cross",D:"Pedestrian icon",answer:"B"},
+{question:"Which car uses batteries to run?",A:"Electric car",B:"Petrol car",C:"Diesel truck",D:"Bicycle",answer:"A"},
+{question:"Which car part houses the engine?",A:"Trunk",B:"Hood/bonnet",C:"Boot",D:"Roof",answer:"B"},
+{question:"Which is used to check oil level?",A:"Dipstick",B:"Tire gauge",C:"Speedometer",D:"GPS",answer:"A"},
+{question:"What helps cool the interior in hot weather?",A:"Air conditioning (AC)",B:"Brake",C:"Horn",D:"Seat belt",answer:"A"},
+{question:"What keeps the windshield clear of rain?",A:"Wipers",B:"Mirrors",C:"Horn",D:"Seats",answer:"A"},
+{question:"Which is a luxury car brand?",A:"Lamborghini",B:"Bicycle",C:"Tractor",D:"Scooter",answer:"A"},
+{question:"What is often used to secure a parked car from rolling?",A:"Handbrake / Parking brake",B:"Wipers",C:"Horn",D:"Headlights",answer:"A"},
+{question:"Which feature helps driver see behind when reversing?",A:"Rearview mirror",B:"Sunroof",C:"Roof rack",D:"Spoiler",answer:"A"},
+{question:"Which car part covers the top of the engine bay?",A:"Hood/bonnet",B:"Trunk",C:"Door",D:"Bumper",answer:"A"},
+{question:"Which of these is electric car maker?",A:"Tesla",B:"Subaru (not fully electric)",C:"Yamaha",D:"Caterpillar",answer:"A"},
+{question:"Which is used to carry luggage outside the vehicle?",A:"Trunk/boot or roof rack",B:"Engine",C:"Radiator",D:"Tire",answer:"A"},
+{question:"Which device measures tire pressure in modern cars sometimes?",A:"TPMS (Tire Pressure Monitoring System)",B:"Odometer",C:"Clock",D:"Radio",answer:"A"},
+{question:"Which cup holder is inside the car for drinks?",A:"Trunk",B:"Center console cup holder",C:"Hood",D:"Gearbox",answer:"B"},
+{question:"What should you do if the fuel light is on?",A:"Refuel soon",B:"Turn off engine only",C:"Change music",D:"Open trunk",answer:"A"},
+{question:"Which is often used for towing another vehicle?",A:"Tow hook or tow bar",B:"Steering wheel",C:"Radio",D:"Roof",answer:"A"},
+{question:"Which car has an open cargo bed at the back?",A:"SUV",B:"Pickup truck",C:"Coupe",D:"Minivan",answer:"B"},
+{question:"Which is a road rule for safety?",A:"Drive while sleepy",B:"Follow speed limits",C:"Ignore signals",D:"Use phone while driving",answer:"B"},
+{question:"What color are lane dividers often painted?",A:"White or yellow",B:"Pink",C:"Purple",D:"Black",answer:"A"},
+{question:"Which light shows the car is going backwards?",A:"Reverse light",B:"Brake light",C:"Headlight",D:"Turn signal",answer:"A"},
+{question:"Which part of a car protects passengers in a crash?",A:"Airbag and seat belt",B:"Radio",C:"Headlights",D:"Tire",answer:"A"},
+{question:"What does 'L' often stand for on gear?",A:"Low gear",B:"Left lane",C:"Light",D:"Lock",answer:"A"},
+{question:"Which is a compact, fuel-efficient car style?",A:"Hatchback",B:"Bus",C:"Truck",D:"Tractor",answer:"A"},
+{question:"Which vehicle is best for carrying large goods?",A:"Truck",B:"Bike",C:"Sports car",D:"Sedan",answer:"A"},
+{question:"Which indicates the car's battery health on dash sometimes?",A:"Battery icon",B:"Fuel gauge",C:"Speedometer",D:"Clock",answer:"A"},
+{question:"Which part is used to stop the car when parked on slope often?",A:"Parking brake",B:"Headlight",C:"Horn",D:"Seat",answer:"A"},
+{question:"Which component turns engine power into motion to the wheels?",A:"Transmission/gearbox",B:"Sunroof",C:"Radio",D:"Mirror",answer:"A"},
+{question:"Which car maker uses a blue oval logo?",A:"Ford",B:"Toyota",C:"Audi",D:"Ferrari",answer:"A"},
+{question:"Which car type has two doors and sporty look?",A:"Coupe",B:"Hatchback",C:"SUV",D:"Minivan",answer:"A"},
+{question:"Which tool helps inflate a flat tire temporarily?",A:"Air compressor or inflator",B:"Hammer",C:"Screwdriver",D:"Paint brush",answer:"A"},
+{question:"Which of these is a hybrid car feature?",A:"Uses petrol + electric motor",B:"Only uses diesel",C:"Only uses solar",D:"Only uses kerosene",answer:"A"},
+{question:"Which device prevents engine flooding in winter? (starter aid)",A:"Engine heater / block heater",B:"Wiper fluid",C:"Cup holder",D:"Mirror",answer:"A"},
+{question:"Which system improves traction in slippery conditions?",A:"Traction control (TCS)",B:"Radio",C:"Horn",D:"AC",answer:"A"},
+{question:"What should you do before reversing?",A:"Check mirrors and look back",B:"Close windows",C:"Turn off engine",D:"Turn on radio",answer:"A"},
+{question:"Where do you put fuel in a car?",A:"Fuel filler cap / fuel door",B:"Trunk",C:"Glove box",D:"Roof",answer:"A"},
+{question:"What is the usual place to buy petrol/diesel?",A:"Fuel station / petrol station",B:"Supermarket",C:"Library",D:"School",answer:"A"},
+{question:"Which device reduces harmful emissions from the engine?",A:"Catalytic converter",B:"Rear bumper",C:"Windshield",D:"Steering wheel",answer:"A"},
+{question:"Which light should you lower when meeting oncoming traffic at night?",A:"High beam",B:"Interior dome",C:"Dashboard",D:"Hazard",answer:"A"},
+{question:"Which control stops the car completely on steep hills sometimes?",A:"Handbrake / Parking brake",B:"Horn",C:"Wipers",D:"AC",answer:"A"},
+{question:"Which part is used to carry bicycles on the car roof?",A:"Roof rack",B:"Trunk",C:"Hood",D:"Steering wheel",answer:"A"},
+{question:"What should you fasten before driving?",A:"Seat belt",B:"Hat",C:"Sunglasses",D:"Ring",answer:"A"},
+{question:"Which system helps with starting a car in cold weather?",A:"Battery and starter motor",B:"Horn",C:"Wipers",D:"Airbag",answer:"A"},
+{question:"Which is often used to indicate danger/hazard ahead (on road)?",A:"Warning triangle",B:"Radio",C:"Mirror",D:"Cup holder",answer:"A"},
+{question:"Which car part reduces drag and improves looks on rear?",A:"Spoiler",B:"Mirror",C:"Seat",D:"Wiper",answer:"A"},
+{question:"Which color is often used for caution (e.g., warning signs)?",A:"Yellow",B:"Blue",C:"Purple",D:"Brown",answer:"A"},
+{question:"Which component lights up when engine oil pressure is low?",A:"Oil warning light",B:"Seat belt light",C:"Headlight",D:"Fuel light",answer:"A"},
+{question:"Which is good practice when you see a school crossing?",A:"Slow down and watch children",B:"Speed up",C:"Honk continuously",D:"Ignore",answer:"A"},
+{question:"Which car brand makes the Mustang?",A:"Ford",B:"Toyota",C:"Honda",D:"Nissan",answer:"A"},
+{question:"Which device is used to lift a car to change a tire?",A:"Car jack",B:"Wrench",C:"Screwdriver",D:"Pliers",answer:"A"},
+{question:"Which button helps flash all signals at once to warn others?",A:"Hazard lights",B:"Horn",C:"Headlight",D:"Radio",answer:"A"},
+{question:"Which car door opens the most for easy cargo access in hatchbacks?",A:"Liftgate / hatch",B:"Front hood",C:"Trunk in sedans",D:"Sunroof",answer:"A"},
+{question:"Which is the usual place a driver sits?",A:"Driver seat (left or right depending on country)",B:"Trunk",C:"Roof",D:"Hood",answer:"A"},
+{question:"Which part is under the car and helps with exhaust?",A:"Muffler / exhaust",B:"Windshield",C:"Battery",D:"Seat",answer:"A"},
+{question:"Which is a common car color?",A:"Black, white, grey, blue, red",B:"Glow-in-the-dark only",C:"Transparent",D:"Polka dot only",answer:"A"},
+{question:"Which of these is a road for bicycles only?",A:"Bike lane",B:"Motorway",C:"Freeway",D:"Highway",answer:"A"},
+{question:"Which is used to lock/unlock car remotely in modern cars?",A:"Key fob / remote",B:"Hammer",C:"Paint brush",D:"Wrench",answer:"A"},
+{question:"Which keeps the engine sparks working in petrol engines?",A:"Spark plugs",B:"Tires",C:"Mirrors",D:"Seats",answer:"A"},
+{question:"Which light tells other drivers you're stopping?",A:"Brake lights",B:"Headlights",C:"Fog lights",D:"Reverse lights",answer:"A"},
+{question:"Which car type usually has a higher ground clearance for rough roads?",A:"SUV or 4x4",B:"Sports car",C:"Sedan",D:"Coupe",answer:"A"},
+{question:"What tool tightens/loosens wheel nuts when changing tires?",A:"Lug wrench / wheel brace",B:"Paint brush",C:"Pliers",D:"Ruler",answer:"A"},
+{question:"Which is the first thing to do when approaching a red light?",A:"Stop",B:"Speed up",C:"Turn off engine",D:"Honk",answer:"A"},
+{question:"Which fuel pump device in the car sends fuel to engine?",A:"Fuel pump",B:"Oil pump",C:"Water pump",D:"Brake pump",answer:"A"},
+{question:"Which system helps you park in tight spaces by beeping?",A:"Parking sensors",B:"Wipers",C:"AC",D:"Radio",answer:"A"},
+{question:"Which of these lights is used in heavy rain to be visible to others?",A:"Fog lights",B:"Interior lights",C:"Glove box light",D:"Map light",answer:"A"},
+{question:"Which is the front-most part of a car called?",A:"Bumper/hood area",B:"Trunk",C:"Roof rack",D:"Boot",answer:"A"},
+{question:"Which device stores songs and plays music in the car?",A:"Radio / stereo",B:"Tachometer",C:"Fuel gauge",D:"Airbag",answer:"A"},
+{question:"Which of these is a two-wheeled motor vehicle (not a car)?",A:"Motorcycle",B:"SUV",C:"Sedan",D:"Minivan",answer:"A"},
+{question:"Where do passengers usually sit in the back of a car?",A:"Back seat / rear seat",B:"Trunk",C:"Roof",D:"Hood",answer:"A"},
+{question:"Which item do drivers use to see traffic behind?",A:"Rearview mirror",B:"Tire",C:"Hood",D:"Mirror ornament",answer:"A"},
+{question:"Which measurement tells engine power (commonly)?",A:"Horsepower (HP)",B:"Liters only",C:"Meters",D:"PSI",answer:"A"},
+{question:"Which is a common reason to change engine oil?",A:"Regular maintenance",B:"Change radio",C:"Change tires only",D:"Wash car",answer:"A"},
+{question:"Which part helps the driver breathe filtered air inside car?",A:"Cabin air filter / AC filter",B:"Tire",C:"Engine",D:"Spoiler",answer:"A"},
+{question:"Which is a sign to indicate pedestrians crossing ahead?",A:"Pedestrian crossing sign",B:"Fuel sign",C:"Tune-up sign",D:"No parking sign",answer:"A"},
+{question:"Which is the main function of headlights on low beam?",A:"Light the road without blinding others",B:"Decorate the car",C:"Play music",D:"Open doors",answer:"A"},
+{question:"Which vehicle usually carries many people long-distance (public transport)?",A:"Bus",B:"Sports car",C:"Coupe",D:"Bike",answer:"A"},
+{question:"Which item should you not leave running while refuelling?",A:"Engine",B:"Radio",C:"Phone",D:"Seat belt",answer:"A"},
+{question:"Which device do many cars have to show directions and maps?",A:"GPS / Navigation",B:"Clock",C:"Fuel cap",D:"Mirror",answer:"A"},
+{question:"Which of these is a tiny city car for short trips?",A:"Microcar / compact",B:"Truck",C:"Bus",D:"Boat",answer:"A"},
+{question:"Which part is used to change stereo volume?",A:"Volume knob or controls",B:"Brake pedal",C:"Tire",D:"Hood",answer:"A"},
+{question:"Which is important to check weekly for safe driving?",A:"Tire pressure and lights",B:"Radio songs",C:"Sunroof only",D:"Mirror stickers",answer:"A"},
+{question:"Which is a typical family car type with 4 doors and trunk?",A:"Sedan",B:"Tractor",C:"Motorbike",D:"Skateboard",answer:"A"},
+{question:"Which helps reduce skidding by applying brakes selectively?",A:"ABS (Anti-lock Braking System)",B:"Sunroof",C:"Radio",D:"AC",answer:"A"},
+{question:"Which brand has a trident logo (Maserati) or similar?",A:"Maserati",B:"Kia",C:"Renault",D:"Skoda",answer:"A"},
+{question:"Which of these is a hybrid-electric car benefit?",A:"Better fuel economy",B:"Louder horn",C:"Heavier radio",D:"Less seats",answer:"A"},
+{question:"Which item is used to check oil color and level?",A:"Dipstick",B:"Mirror",C:"Wiper",D:"Tire",answer:"A"},
+{question:"Which of these shows how many miles/kilometers you have driven?",A:"Odometer",B:"Tachometer",C:"Clock",D:"Tripod",answer:"A"},
+{question:"Which is the safest place for children in a car?",A:"Rear seats with child seat",B:"Roof",C:"Trunk",D:"Front bonnet",answer:"A"},
+{question:"Which symbol on dashboard warns of low fuel?",A:"Fuel light",B:"Battery light",C:"Oil light",D:"Seat belt light",answer:"A"},
+{question:"Which of these helps with visibility during night in fog?",A:"Fog lights",B:"High beams only",C:"Interior lamp",D:"Radio",answer:"A"},
+{question:"Which is a common manual action to open a car door from outside?",A:"Use external handle",B:"Press accelerator",C:"Turn radio on",D:"Lift tire",answer:"A"},
+{question:"Which is important to change at regular service intervals?",A:"Engine oil and filter",B:"Radio songs",C:"Tire stickers",D:"Air freshener",answer:"A"},
+{question:"Which type of car seat gives extra height for small children?",A:"Booster seat / child seat",B:"Sofa",C:"Bucket",D:"Tractor seat",answer:"A"},
+{question:"Which turns off the engine when you turn key to lock position usually?",A:"Ignition off",B:"Horn",C:"Wiper",D:"Headlight",answer:"A"},
+{question:"Which is used to open the fuel cap on many modern cars?",A:"Press button or open fuel door manually",B:"Kick the tire",C:"Turn radio",D:"Use mirror",answer:"A"},
+{question:"Which car color tends to show dirt less than white?",A:"Silver/Gray",B:"White only",C:"Neon green",D:"Pink",answer:"A"},
+{question:"Which car has an open top for fresh-air driving?",A:"Convertible",B:"Hatchback",C:"Sedan",D:"Van",answer:"A"},
+{question:"Which is used to select drive, reverse, neutral in an automatic car?",A:"Gear selector / shifter",B:"Steering wheel",C:"Wipers",D:"Horn",answer:"A"},
+{question:"Which light lets others know you are turning?",A:"Indicator / turn signal",B:"Brake light",C:"Fog light",D:"Reverse light",answer:"A"},
+{question:"Which is the large open space at rear used for storage in sedans?",A:"Trunk / boot",B:"Hood",C:"Roof",D:"Glove box",answer:"A"},
+{question:"Which car check helps prevent tyre bursts (regularly)?",A:"Check tyre pressure",B:"Change radio",C:"Add stickers",D:"Polish mirrors",answer:"A"},
+{question:"Which car part is used to reduce engine noise in the exhaust system?",A:"Muffler",B:"Battery",C:"Wiper",D:"Mirror",answer:"A"},
+{question:"Which of these is used to start an engine in older cars (besides button)?",A:"Physical key",B:"Phone app only",C:"Sunglasses",D:"Cup holder",answer:"A"},
+{question:"Which sign tells you there is a pedestrian crossing ahead?",A:"Pedestrian sign",B:"Hospital sign",C:"Restaurant sign",D:"Fuel sign",answer:"A"},
+{question:"Which component stops flammable liquids from reaching hot surfaces (safety)?",A:"Fuel lines and shielding",B:"Cup holder",C:"Radio",D:"Spoiler",answer:"A"},
+{question:"Which car style is known for fast acceleration and sport handling?",A:"Sports car",B:"Minivan",C:"Pickup tractor",D:"Bus",answer:"A"},
+{question:"Which of these helps driver see blind spots sometimes?",A:"Blind spot mirror / camera",B:"Radio",C:"Glove box",D:"Cup holder",answer:"A"},
+{question:"Which do you check to know how hot the engine is running?",A:"Temperature gauge",B:"Fuel gauge",C:"Odometer",D:"Clock",answer:"A"},
+{question:"Which system helps keep cabin comfortable temperature?",A:"Air conditioning (AC) or heater",B:"Horn system",C:"Brake system",D:"Tire system",answer:"A"},
+{question:"Which abbreviation means 'all-wheel drive'?",A:"AWD",B:"AC",C:"RPM",D:"GPS",answer:"A"},
+{question:"Which is a common reason to call a mechanic?",A:"Engine light on or strange noises",B:"To change the radio song",C:"To fix seatbelt color",D:"To polish tires",answer:"A"},
+{question:"Which feature allows keyless entry and start in some cars?",A:"Smart key / keyless entry",B:"Manual crank",C:"Chalk",D:"Tape",answer:"A"},
+{question:"Which of these is a common service interval item?",A:"Oil change",B:"Window tinting",C:"Sticker replacement",D:"Seat reupholster",answer:"A"},
+{question:"Which of these shows fuel economy in many cars?",A:"MPG or L/100km readout",B:"Radio display",C:"Mirror text",D:"Horn sound",answer:"A"},
+{question:"Which of these is NOT recommended while driving?",A:"Using phone without hands-free",B:"Wearing seat belt",C:"Following speed limits",D:"Using signals to turn",answer:"A"},
+{question:"Which is the purpose of a rear spoiler on some cars?",A:"Improve aerodynamics and stability",B:"Store shoes",C:"Hold snacks",D:"Play music",answer:"A"},
+{question:"Which is a basic maintenance check you can do yourself?",A:"Check tyre pressure and oil level",B:"Change engine",C:"Replace gearbox",D:"Repaint car",answer:"A"},
+{question:"Which device helps warm the windshield to remove frost?",A:"Defroster",B:"Horn",C:"Tire pump",D:"Mirror heater only",answer:"A"},
+{question:"Which sound do most car horns make commonly?",A:"Honk",B:"Bark",C:"Meow",D:"Chirp",answer:"A"},
+{question:"Which light should you use in heavy fog to be seen (rear)?",A:"Fog rear lights (and low beam front)",B:"High beam only",C:"Interior lamp",D:"Map light",answer:"A"},
+{question:"Which car brand makes the 3 Series?",A:"BMW",B:"Toyota",C:"Honda",D:"Ford",answer:"A"},
+{question:"Which of these helps children travel safely in cars?",A:"Child car seats and booster seats",B:"Large pillows",C:"Blankets",D:"Video games",answer:"A"},
+{question:"Which is a common color for emergency stop signs on roads?",A:"Red",B:"Blue",C:"Green",D:"Black",answer:"A"},
+{question:"Which part helps to keep doors sealed against rain and wind?",A:"Weatherstripping / seals",B:"Tire",C:"Seat",D:"Radio",answer:"A"},
+{question:"Which of these should you do before long journeys for safety?",A:"Check tires, lights and oil",B:"Change songs",C:"Paint car",D:"Count coins",answer:"A"},
+{question:"Which is a common hybrid car manufacturer?",A:"Toyota (Prius)",B:"Ferrari",C:"Lamborghini",D:"Harley-Davidson",answer:"A"},
+{question:"Which car control is used by foot to stop rolling when stationary sometimes?",A:"Parking brake",B:"Headlight switch",C:"Mirror control",D:"Radio knob",answer:"A"},
+{question:"Which sign shows you speed limit on the road?",A:"Speed limit sign",B:"No entry sign",C:"Hospital sign",D:"Pedestrian sign",answer:"A"},
+{question:"Which of these is used to secure child seats to car anchor points?",A:"ISOFIX / LATCH connectors",B:"Tape",C:"Glue",D:"Rope",answer:"A"},
+{question:"Which part do you clean with windshield washer fluid?",A:"Windshield",B:"Tires",C:"Seats",D:"Steering wheel",answer:"A"},
+{question:"Which is an indicator of a healthy car battery?",A:"Car starts normally and battery light off",B:"Battery leaks oil",C:"Engine smokes a lot",D:"Doors fall off",answer:"A"},
+{question:"Which of these would likely increase fuel economy if driven correctly?",A:"Smooth driving and steady speed",B:"Constant hard acceleration",C:"Heavy braking often",D:"Driving with windows open always",answer:"A"},
+{question:"Which device warns when tires are low on pressure?",A:"TPMS (Tire Pressure Monitoring System)",B:"Radio",C:"Clock",D:"Fuel gauge",answer:"A"},
+{question:"Which is the name for the front glass of a car?",A:"Windshield (or windscreen)",B:"Boot",C:"Fender",D:"Bumper",answer:"A"},
+{question:"Which of these is used to secure items in trunk so they don't roll?",A:"Cargo net or tie-downs",B:"Spare tire only",C:"Engine",D:"Radio",answer:"A"},
+{question:"Which of these indicates the car has all-wheel drive in badge sometimes?",A:"AWD badge",B:"AC label",C:"Radio symbol",D:"GPS icon",answer:"A"},
+{question:"Which of these is used to improve visibility behind when reversing (camera)?",A:"Rearview camera",B:"GPS",C:"Tachometer",D:"Oil gauge",answer:"A"},
+{question:"Which is an example of a luxury car brand?",A:"Mercedes-Benz",B:"Mitsubishi (economy)",C:"Bajaj (motorbike)",D:"Yonkers (not car)",answer:"A"},
+{question:"Which sign shows you must not enter a road?",A:"No entry sign",B:"Speed sign",C:"Yield sign",D:"Parking sign",answer:"A"},
+{question:"Which is the correct tyre placement term for spare tyre in many cars?",A:"Spare / donut / full-size spare",B:"Radio spare",C:"Mirror spare",D:"Seat spare",answer:"A"},
+{question:"Which of these helps reduce glare from headlights behind you at night?",A:"Adjust rearview mirror to night position",B:"Turn on hazard lights",C:"Open roof",D:"Turn off engine",answer:"A"},
+{question:"Which kind of fuel is commonly used in diesel engines?",A:"Diesel",B:"Petrol",C:"Electricity",D:"Gasoline (in some regions same as petrol)",answer:"A"},
+{question:"Which of these tools is used to loosen wheel nuts?",A:"Lug wrench",B:"Paintbrush",C:"Chisel",D:"Rag",answer:"A"},
+{question:"Which is the name for the front bumper area protector often?",A:"Bumper",B:"Hood",C:"Trunk",D:"Spoiler",answer:"A"},
+{question:"Which is a recommended safe following distance practice?",A:"Keep a safe distance (2 seconds or more)",B:"Ride bumper to bumper",C:"Drive side by side always",D:"Tailgate always",answer:"A"},
+{question:"Which is a small car often with rear hatch for city use called?",A:"Hatchback",B:"Tractor",C:"Truck",D:"Bus",answer:"A"},
+{question:"Which of these is used to measure engine oil pressure sometimes?",A:"Oil pressure gauge",B:"Fuel gauge",C:"Tire gauge",D:"Speedometer",answer:"A"},
+{question:"Which type of light is best to use in very dark open roads when alone?",A:"High beam (but dip for oncoming traffic)",B:"Hazard",C:"Interior light",D:"Reverse light",answer:"A"},
+{question:"Which is a common place to store registration and insurance documents in car?",A:"Glovebox / glove compartment",B:"Trunk",C:"Roof",D:"Under tire",answer:"A"},
+{question:"Which of these is a sign of a worn tire requiring replacement?",A:"Tread depth low or uneven wear",B:"Radio doesn't work",C:"Seat belt stuck",D:"Headlight flickers",answer:"A"},
+{question:"Which car part often contains the air filter on many cars?",A:"Air intake box / engine bay",B:"Tire",C:"Trunk",D:"Rear light",answer:"A"},
+{question:"Which system warms seats in many modern vehicles?",A:"Heated seats",B:"AC",C:"Radio",D:"Brake system",answer:"A"},
+{question:"Which is the correct action at a flashing red traffic light?",A:"Stop and proceed when safe",B:"Speed up",C:"Ignore",D:"Turn on radio",answer:"A"},
+{question:"Which of these helps reduce wind noise at high speeds?",A:"Good seals and aerodynamic design",B:"Heavy horn",C:"Bright color",D:"Large stickers",answer:"A"},
+{question:"Which of these is useful in winter to melt ice on windshield quickly?",A:"Windshield de-icer or defroster",B:"Oil",C:"Brake fluid",D:"Tire",answer:"A"},
+{question:"Which is the type of car with long body and luxury often used as chauffeur cars?",A:"Limousine (limo)",B:"Minivan",C:"Hatchback",D:"Scooter",answer:"A"},
+{question:"Which of these helps when car engine overheats to cool down after stopping?",A:"Turn off engine and let cool, check coolant",B:"Open glovebox",C:"Turn on radio",D:"Drive faster",answer:"A"},
+{question:"Which of these helps improve visibility during night and rain when headlights reflect on road?",A:"Use low beam and fog lights as appropriate",B:"Use high beam only",C:"Use interior light",D:"Close windows",answer:"A"},
+{question:"Which of these is a common taxi vehicle type in many cities?",A:"Sedan or compact hatchback",B:"Tractor",C:"Large truck",D:"Motorboat",answer:"A"},
+{question:"Which of these is an eco-friendly driving habit?",A:"Smooth acceleration and maintain steady speed",B:"Rev engine frequently",C:"Rapid braking often",D:"Idle engine for long time",answer:"A"},
+{question:"Which of these should you do if your tire bursts while driving?",A:"Hold steering firmly, slow down gradually and pull over safely",B:"Turn off lights, drive faster",C:"Jump out",D:"Open hood",answer:"A"},
+{question:"Which of these is common in car dashboards to show warnings and information?",A:"Indicator lights and message center",B:"Cup holder",C:"Spare wheel",D:"Seat",answer:"A"},
+{question:"Which of the following is NOT a car brand?",A:"Banana (not a brand)",B:"Toyota",C:"Honda",D:"Ford",answer:"A"},
+{question:"Which of these is a key maintenance item for tires?",A:"Rotate tyres regularly",B:"Wash radio",C:"Replace mirrors",D:"Change wipers only",answer:"A"},
+{question:"Which of these helps when your battery is dead to start car?",A:"Jump-start with jumper cables or battery pack",B:"Change tires",C:"Use radio",D:"Open trunk",answer:"A"},
+{question:"Which of these is commonly used to secure doors when parked (locks)?",A:"Door locks and central locking",B:"Tire locks",C:"Wipers",D:"Radio lock",answer:"A"},
+{question:"Which of these indicates a car's engine needs attention when lit?",A:"Check engine light (malfunction indicator)",B:"Seat belt light",C:"AC light",D:"Sunroof light",answer:"A"},
+{question:"Which of these is a type of transmission?",A:"Manual and automatic",B:"Round and square",C:"Hot and cold",D:"Electric and wooden",answer:"A"},
+{question:"Which of these is a common test drive purpose?",A:"Check comfort, handling and performance",B:"Wash car",C:"Tune radio",D:"Paint",answer:"A"},
+{question:"Which of these is used to charge an electric car at home often?",A:"Home charger / EV charging point",B:"Gas pump",C:"Fuel can",D:"Oil drum",answer:"A"},
+{question:"Which of these is usually replaced when brakes feel weak or noisy?",A:"Brake pads",B:"Air filter",C:"Tire valve",D:"Radio",answer:"A"},
+{question:"Which of these indicates the vehicle is in reverse gear (in automatic)?",A:"Reverse (R) selected and reverse lights on",B:"High beam on",C:"Hazard lights on",D:"Wipers on",answer:"A"},
+{question:"Which of these provides better cornering grip for performance cars?",A:"Good tyres and suspension",B:"Loud horn",C:"Big stickers",D:"Bright color",answer:"A"},
+{question:"Which is the correct response to an ambulance approaching with siren on road?",A:"Move aside to let it pass",B:"Speed up and follow closely",C:"Ignore and keep driving",D:"Turn off lights",answer:"A"}
+]; // END quizData
+
+/* ===== Quiz Logic ===== */
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+const total = quizData.length;
+
+const qIndexEl = document.getElementById('qIndex');
+const questionText = document.getElementById('questionText');
+const progressBar = document.getElementById('progressBar');
+const scoreView = document.getElementById('scoreView');
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+const resultsEl = document.getElementById('results');
+const finalScore = document.getElementById('finalScore');
+const percentText = document.getElementById('percentText');
+
+const optEls = {
+  A: document.getElementById('optA'),
+  B: document.getElementById('optB'),
+  C: document.getElementById('optC'),
+  D: document.getElementById('optD')
+};
+const textEls = {
+  A: document.getElementById('textA'),
+  B: document.getElementById('textB'),
+  C: document.getElementById('textC'),
+  D: document.getElementById('textD')
+};
+
+/* Load question by index */
+function loadQuestion(idx){
+  const q = quizData[idx];
+  qIndexEl.innerText = idx + 1;
+  questionText.innerText = q.question;
+  textEls.A.innerText = q.A;
+  textEls.B.innerText = q.B;
+  textEls.C.innerText = q.C;
+  textEls.D.innerText = q.D;
+  updateProgress(idx);
+  // reset styles
+  ['A','B','C','D'].forEach(l=>{
+    optEls[l].classList.remove('selected','correct','wrong');
+    optEls[l].style.pointerEvents = 'auto';
+  });
+  answered = false;
+  nextBtn.disabled = true;
+  prevBtn.disabled = (idx===0);
+}
+
+/* Update progress bar and score display */
+function updateProgress(idx){
+  const pct = Math.round(((idx)/total)*100);
+  progressBar.style.width = pct + '%';
+  scoreView.innerText = `Score: ${score}`;
+}
+
+/* Option click handler */
+function handleOption(e){
+  if(answered) return;
+  const letter = this.getAttribute('data-letter');
+  const q = quizData[currentIndex];
+  answered = true;
+  // disable other options' pointer events
+  ['A','B','C','D'].forEach(l=> optEls[l].style.pointerEvents = 'none');
+  // mark selected
+  this.classList.add('selected');
+  // Check correct
+  if(letter === q.answer){
+    this.classList.add('correct');
+    score++;
+  } else {
+    this.classList.add('wrong');
+    // highlight correct
+    optEls[q.answer].classList.add('correct');
+  }
+  // enable next
+  nextBtn.disabled = false;
+  updateProgress(currentIndex);
+}
+
+/* Attach handlers */
+Object.values(optEls).forEach(el=> el.addEventListener('click', handleOption));
+
+/* Next question */
+function nextQuestion(){
+  if(!answered){
+    // do nothing until answered
+    return;
+  }
+  currentIndex++;
+  if(currentIndex >= total){
+    showResults();
+    return;
+  }
+  loadQuestion(currentIndex);
+}
+
+/* Previous question - does not change scoring (answers are not saved) */
+function prevQuestion(){
+  if(currentIndex === 0) return;
+  // simple behaviour: go back and don't change score (this keeps logic simple)
+  currentIndex--;
+  loadQuestion(currentIndex);
+}
+
+/* Show results */
+function showResults(){
+  document.getElementById('quizArea').style.display = 'none';
+  resultsEl.style.display = 'block';
+  finalScore.innerText = `${score} / ${total}`;
+  const pct = Math.round((score/total)*100);
+  percentText.innerText = `${pct}% correct — Great job!`;
+  progressBar.style.width = '100%';
+}
+
+/* Restart */
+function restart(){
+  currentIndex = 0;
+  score = 0;
+  resultsEl.style.display = 'none';
+  document.getElementById('quizArea').style.display = 'block';
+  loadQuestion(0);
+}
+
+/* Initialize */
+loadQuestion(0);
+
+/* Keyboard accessibility: 1-4 choose options, Enter for next if available */
+document.addEventListener('keydown', (e)=>{
+  if(e.key>='1' && e.key<='4'){
+    const map = {'1':'A','2':'B','3':'C','4':'D'};
+    const el = optEls[map[e.key]];
+    if(el) el.click();
+  } else if(e.key === 'Enter'){
+    if(!nextBtn.disabled) nextBtn.click();
+  } else if(e.key === 'ArrowRight'){
+    if(!nextBtn.disabled) nextBtn.click();
+  } else if(e.key === 'ArrowLeft'){
+    prevBtn.click();
+  }
+});
+</script>
+</body>
+</html>

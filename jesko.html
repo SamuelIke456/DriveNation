@@ -1,0 +1,227 @@
+<!Doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Koenigsegg Jesko Absolut — Drive Nation</title>
+
+  <style>
+    :root{
+      --bg: #fff7f7;
+      --card: #f3e6e6;
+      --accent: rosybrown;
+      --dark: #3b2f2f;
+      --muted: #6b5959;
+      --radius: 12px;
+      --maxw: 900px;
+      font-family: Inter, system-ui, Arial;
+    }
+
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#fff3f3 120px);
+      color:var(--dark);
+      display:flex;
+      justify-content:center;
+      padding:36px 16px;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+      background:linear-gradient(180deg,rgba(255,255,255,0.85),var(--card));
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(101,70,70,0.08);
+      border:1px solid rgba(196,130,130,0.12);
+    }
+
+    header{
+      padding:28px 32px;
+      display:flex;
+      align-items:center;
+      gap:20px;
+      background:linear-gradient(90deg,rgba(199,111,111,0.12),rgba(255,255,255,0.02));
+    }
+
+    .logo{
+      width:84px;
+      height:84px;
+      border-radius:14px;
+      background:linear-gradient(135deg,rgba(199,111,111,0.14),rgba(178,130,130,0.06));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      font-weight:700;
+      color:var(--dark);
+      box-shadow:0 6px 18px rgba(200,120,120,0.06);
+    }
+
+    h1{margin:0;font-size:20px;color:var(--dark);}
+    p.lead{margin:6px 0 0;font-size:14px;color:var(--muted);}
+
+    .container{
+      padding:28px 32px;
+      display:grid;
+      gap:20px;
+    }
+
+    .card{
+      background:white;
+      padding:18px;
+      border-radius:var(--radius);
+      box-shadow:0 6px 18px rgba(120,90,90,0.04);
+      border:1px solid rgba(200,140,140,0.06);
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+      margin-bottom:8px;
+    }
+
+    .badge{
+      padding:6px 10px;
+      background:linear-gradient(180deg,rgba(199,111,111,0.12),rgba(199,111,111,0.06));
+      border-radius:8px;
+      font-weight:600;
+      font-size:13px;
+      color:var(--dark);
+      border:1px solid rgba(199,111,111,0.06);
+    }
+
+    h2{margin:4px 0 12px;font-size:18px;color:var(--dark);}
+
+    ul.specs{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    ul.specs li{
+      background:linear-gradient(180deg,#fff,#fff7f7);
+      padding:10px;
+      border-radius:10px;
+      color:var(--muted);
+      font-size:14px;
+      border:1px solid rgba(200,140,140,0.04);
+    }
+
+    @media(min-width:720px){
+      ul.specs{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+      }
+    }
+
+    .history p{
+      margin:10px 0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.5;
+    }
+
+    img.car{
+      max-width:100%;
+      border-radius:10px;
+      box-shadow:0 10px 30px rgba(120,80,80,0.06);
+    }
+
+    footer{
+      padding:20px 32px;
+      display:flex;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:13px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="logo">Drive<br>Nation</div>
+      <div>
+        <h1>Koenigsegg Jesko Absolut</h1>
+        <p class="lead">Engineered to be the fastest Koenigsegg ever — built for maximum top speed.</p>
+      </div>
+    </header>
+
+    <div class="container">
+
+      <!-- Overview -->
+      <section class="card">
+        <div class="meta">
+          <div class="badge">Twin-Turbo V8</div>
+          <div class="badge">1,600+ HP</div>
+          <div class="badge">Low Drag</div>
+        </div>
+
+        <h2>Quick overview</h2>
+        <p class="lead">
+          The Jesko Absolut is Koenigsegg’s top-speed–focused hypercar, designed with the lowest drag coefficient 
+          in their history. With immense power and advanced aerodynamics, it aims to break the world top-speed record.
+        </p>
+      </section>
+
+      <!-- History -->
+      <section class="card history">
+        <h2>History — how it came to be</h2>
+
+        <p>
+          Koenigsegg introduced the Jesko in 2019 as the successor to the Agera RS.  
+          While the standard Jesko focused on track performance and downforce, Koenigsegg wanted another version 
+          dedicated purely to raw speed.
+        </p>
+
+        <p>
+          The Jesko Absolut was created with redesigned bodywork, covered rear wheels, a stretched tail, 
+          and a drastically reduced drag coefficient of only **0.278** — making it the slipperiest Koenigsegg ever.
+        </p>
+
+        <p>
+          Koenigsegg believes the Jesko Absolut can reach over **330–350 mph (531–563 km/h)** in the right conditions,  
+          potentially becoming the fastest production car ever made.
+        </p>
+      </section>
+
+      <!-- Specs -->
+      <section class="card">
+        <h2>Key specifications</h2>
+
+        <ul class="specs">
+          <li><strong>Engine:</strong> 5.0L Twin-Turbo V8</li>
+          <li><strong>Power:</strong> 1,600 hp (on E85 fuel)</li>
+          <li><strong>Top speed:</strong> 330+ mph target (531+ km/h)</li>
+          <li><strong>0–100 km/h:</strong> ~2.3 seconds</li>
+          <li><strong>Transmission:</strong> 9-speed Light Speed Transmission</li>
+          <li><strong>Drag Coefficient:</strong> 0.278</li>
+          <li><strong>Drive:</strong> Rear-wheel drive</li>
+          <li><strong>Construction:</strong> Carbon-fiber monocoque</li>
+        </ul>
+      </section>
+
+      <!-- Why it matters -->
+      <section class="card">
+        <h2>Why it matters</h2>
+        <p>
+          The Jesko Absolut represents the absolute limit of Koenigsegg engineering.  
+          It’s not built for track racing — it’s built to rewrite the definition of top speed in a road-legal car.  
+          If it achieves its projected numbers, it will become the fastest production vehicle in history.
+        </p>
+      </section>
+
+    </div>
+<img src="C:\Users\Samue\Desktop\Sublime Text\Pictures for Supercar Websites\jesko absolute.jpg" alt="Aptera" width="900">
+    <footer>
+      <div>Designed by PixelForge Studios • Drive Nation</div>
+    </footer>
+
+  </div>
+</body>
+</html>

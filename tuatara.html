@@ -1,0 +1,223 @@
+<!Doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SSC Tuatara — Drive Nation</title>
+
+  <style>
+    /* RosyBrown Theme */
+    :root{
+      --bg: #fff7f7;
+      --card: #f3e6e6;
+      --accent: rosybrown;
+      --dark: #3b2f2f;
+      --muted: #6b5959;
+      --highlight: #c66b6b;
+      --radius: 12px;
+      --maxw: 900px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    }
+
+    body{
+      margin:0;
+      background: linear-gradient(180deg, var(--bg), #fff3f3 120px);
+      color: var(--dark);
+      display:flex;
+      justify-content:center;
+      padding:36px 16px;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), var(--card));
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow: 0 10px 30px rgba(101,70,70,0.08);
+      border: 1px solid rgba(196,130,130,0.12);
+    }
+
+    header{
+      padding:28px 32px;
+      display:flex;
+      gap:20px;
+      align-items:center;
+      background: linear-gradient(90deg, rgba(199,111,111,0.12), rgba(255,255,255,0.02));
+    }
+
+    .logo{
+      width:84px;
+      height:84px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      color:var(--dark);
+      background: linear-gradient(135deg, rgba(199,111,111,0.14), rgba(178,130,130,0.06));
+      box-shadow: 0 6px 18px rgba(200,120,120,0.06);
+      font-size:18px;
+    }
+
+    h1{
+      margin:0;
+      font-size:20px;
+      color:var(--dark);
+    }
+
+    p.lead{
+      margin:6px 0 0 0;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .container{
+      padding:28px 32px;
+      display:grid;
+      gap:20px;
+    }
+
+    .card{
+      background:white;
+      padding:18px;
+      border-radius:var(--radius);
+      box-shadow:0 6px 18px rgba(120,90,90,0.04);
+      border:1px solid rgba(200,140,140,0.06);
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:16px;
+      margin-bottom:8px;
+    }
+
+    .badge{
+      padding:6px 10px;
+      background:linear-gradient(180deg, rgba(199,111,111,0.12), rgba(199,111,111,0.06));
+      border-radius:8px;
+      color:var(--dark);
+      font-size:13px;
+      font-weight:600;
+      border:1px solid rgba(199,111,111,0.06);
+    }
+
+    h2{
+      margin:4px 0 12px 0;
+      color:var(--dark);
+      font-size:18px;
+    }
+
+    ul.specs{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      gap:10px;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+    }
+
+    ul.specs li{
+      padding:10px;
+      background:linear-gradient(180deg, #fff, #fff7f7);
+      border-radius:10px;
+      font-size:14px;
+      color:var(--muted);
+      border:1px solid rgba(200,140,140,0.04);
+    }
+
+    @media(min-width:720px){
+      ul.specs{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+    }
+
+    .history p{
+      margin:10px 0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.5;
+    }
+
+    img.car{
+      max-width:100%;
+      border-radius:10px;
+      box-shadow: 0 10px 30px rgba(120,80,80,0.06);
+    }
+
+    footer{
+      padding:20px 32px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:13px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">Drive<br>Nation</div>
+      <div>
+        <h1>SSC Tuatara</h1>
+        <p class="lead">SSC’s record-breaking hypercar — rebuilt in a rosybrown theme.</p>
+      </div>
+    </header>
+
+    <div class="container">
+
+      <section class="card">
+        <div class="meta">
+          <div class="badge">Top-speed focused</div>
+          <div class="badge">V8 Twin-Turbo</div>
+          <div class="badge">American Hypercar</div>
+        </div>
+
+        <h2>Quick overview</h2>
+        <p class="lead">
+          The SSC Tuatara is an American hypercar engineered for extreme top speed, lightweight design and aerodynamic efficiency. Its twin-turbo V8 and ultra-slippery bodywork put it among the fastest cars ever built.
+        </p>
+      </section>
+
+      <section class="card history">
+        <h2>History — how it came to be</h2>
+
+        <p>
+          The Tuatara project began after the success of the SSC Ultimate Aero, which once held the title of the world’s fastest production car. SSC aimed to surpass its own record by creating a next-generation hypercar with cutting-edge aerodynamics, a powerful bespoke engine, and a futuristic design.
+        </p>
+
+        <p>
+          Development took several years, with SSC partnering with top engineers for carbon construction, wind-tunnel refinement, and powertrain optimization. The result was the Tuatara — a hypercar designed to challenge 300+ mph territory while retaining road legality and advanced driver-focused engineering.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Key specifications</h2>
+
+        <ul class="specs">
+          <li><strong>Engine:</strong> 5.9L twin-turbo V8</li>
+          <li><strong>Power:</strong> 1,350 hp (regular fuel) / 1,750+ hp (E85)</li>
+          <li><strong>Top speed claim:</strong> 300+ mph (varies by testing)</li>
+          <li><strong>Acceleration:</strong> Extremely rapid, low-drag configuration</li>
+          <li><strong>Weight:</strong> ~1,250 kg (carbon-fiber body)</li>
+          <li><strong>Transmission:</strong> 7-speed roboticized system</li>
+          <li><strong>Drive:</strong> Rear-wheel drive</li>
+          <li><strong>Production:</strong> Very limited</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Why it matters</h2>
+        <p>
+          The SSC Tuatara represents America’s push into the top-speed hypercar competition. With radical aerodynamics, a screaming twin-turbo V8 and ultra-lightweight engineering, it stands as one of the most ambitious speed machines ever produced.
+        </p>
+      </section>
+    </div>
+<img src="C:\Users\Samue\Desktop\Sublime Text\Pictures for Supercar Websites\tuatara.jpg" alt="Aptera" width="900">
+    <footer>
+      <div>Designed by PixelForge Studios • Drive Nation</div>
+    </footer>
+  </div>
+</body>
+</html>

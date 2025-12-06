@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Drive Nation — Ultimate Car Quiz (200 Qs)</title>
+<style>
+/* ===== RosyBrown Themed Quiz Styles ===== */
+:root{
+  --bg1: #fff7f7;
+  --rosy-1: #b98b8b;
+  --rosy-2: #d6b0b0;
+  --accent: #a66c6c;
+  --text: #3e1f1f;
+  --card: #ffffff;
+  --soft: rgba(188,143,143,0.12);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,var(--bg1), #fff0f0 60%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:28px 18px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  min-height:100vh;
+}
+
+/* Container */
+.wrapper{
+  width:100%;
+  max-width:980px;
+  background:linear-gradient(180deg, rgba(255,250,250,0.98), rgba(255,245,245,0.96));
+  border-radius:16px;
+  box-shadow: 0 18px 50px rgba(160,120,120,0.12);
+  padding:22px;
+  border: 1px solid rgba(188,143,143,0.12);
+}
+
+/* Header */
+.header{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+.brand {
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.logo{
+  width:56px;
+  height:56px;
+  border-radius:12px;
+  background: linear-gradient(135deg,var(--rosy-1),var(--rosy-2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:800;
+  font-size:18px;
+  box-shadow: 0 6px 18px rgba(169,110,110,0.18);
+}
+.title{
+  font-size:20px;
+  font-weight:700;
+  color:var(--accent);
+  letter-spacing:0.4px;
+}
+.subtitle{
+  font-size:13px;
+  color:#6a3b3b;
+  opacity:0.95;
+}
+
+/* Card */
+.card{
+  background:var(--card);
+  border-radius:14px;
+  padding:20px;
+  box-shadow: 0 10px 30px rgba(188,143,143,0.06);
+  border:1px solid rgba(188,143,143,0.06);
+}
+
+/* Intro */
+.intro{
+  margin-bottom:18px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+}
+.intro p{margin:0;font-size:15px;line-height:1.6;color:#4f2b2b}
+
+/* Quiz area */
+.quiz-top{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.qnum{
+  font-weight:700;
+  color:var(--accent);
+}
+.progress{
+  flex:1;
+  height:12px;
+  background:var(--soft);
+  border-radius:999px;
+  overflow:hidden;
+  margin-left:12px;
+  margin-right:12px;
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--rosy-1),var(--rosy-2));
+  border-radius:999px;
+  transition:width .35s ease;
+}
+
+/* Question text */
+.question{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:16px;
+  color:#4a2323;
+}
+
+/* Options */
+.options{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+.option{
+  background: linear-gradient(180deg,#fff0f0,#fff6f6);
+  border-radius:12px;
+  padding:14px 16px;
+  cursor:pointer;
+  border:1px solid rgba(188,143,143,0.18);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.option:hover{ transform:translateY(-4px); box-shadow:0 14px 30px rgba(188,143,143,0.08); }
+.opt-letter{
+  width:36px;height:36px;border-radius:10px;
+  background: linear-gradient(180deg,#f9dfdf,#ffecec);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--accent);
+  border:1px solid rgba(188,143,143,0.14);
+}
+.opt-text{font-size:16px;color:#4b2626}
+
+/* Selected / correct / wrong */
+.option.selected{ box-shadow:0 10px 26px rgba(168,110,110,0.12); }
+.option.correct{ background:linear-gradient(180deg,#e6f7ea,#d8f2db); border-color: rgba(80,170,100,0.18); }
+.option.wrong{ background:linear-gradient(180deg,#fde8e8,#fbdcdc); border-color: rgba(220,100,100,0.12); opacity:0.98; }
+
+/* Controls */
+.controls{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:16px;
+  justify-content:space-between;
+}
+.btn{
+  padding:10px 18px;
+  border-radius:12px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(90deg,var(--rosy-1),var(--rosy-2));
+  color:white;
+  box-shadow: 0 8px 22px rgba(169,110,110,0.15);
+}
+.btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; box-shadow:none; }
+.small{ background:transparent; color:var(--accent); font-weight:600; border-radius:10px; padding:8px 10px; border:1px solid rgba(188,143,143,0.08); }
+
+/* Footer / results */
+.results{
+  text-align:center;padding:18px;border-radius:12px;margin-top:12px;background:linear-gradient(180deg,#fffdfd,#fff6f6);border:1px solid rgba(188,143,143,0.06);
+}
+.score{
+  font-size:26px;font-weight:800;color:var(--accent);
+  margin-bottom:6px;
+}
+.detail{ color:#5b2f2f; margin-bottom:10px; }
+
+/* Responsive */
+@media (max-width:640px){
+  .question{ font-size:18px }
+  .brand .title{ font-size:18px }
+}
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <div class="brand">
+        <div class="logo">DN</div>
+        <div>
+          <div class="title">Drive Nation — Car Quiz</div>
+          <div class="subtitle">200 easy & fun car questions</div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:700;color:#6b3434">Test your car knowledge!</div>
+        <div style="font-size:12px;color:#7b4747">Tap an option to answer</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="intro">
+        <p><strong>Welcome!</strong> This quiz contains 200 simple and interesting car questions suitable for everyone. Each question has four options — pick the one you think is right. Your score will be shown at the end.</p>
+        <p>Have fun and learn as you go. Use the Next button to move forward. You can restart at any time.</p>
+      </div>
+
+      <div class="quiz-top">
+        <div class="qnum">Question <span id="qIndex">1</span> / 200</div>
+        <div class="progress" title="Progress">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <div style="min-width:90px;text-align:right;color:#6b3434;font-weight:700" id="scoreView">Score: 0</div>
+      </div>
+
+      <div id="quizArea">
+        <div id="questionText" class="question">Loading question...</div>
+        <div class="options">
+          <div id="optA" class="option" data-letter="A"><div class="opt-letter">A</div><div class="opt-text" id="textA"></div></div>
+          <div id="optB" class="option" data-letter="B"><div class="opt-letter">B</div><div class="opt-text" id="textB"></div></div>
+          <div id="optC" class="option" data-letter="C"><div class="opt-letter">C</div><div class="opt-text" id="textC"></div></div>
+          <div id="optD" class="option" data-letter="D"><div class="opt-letter">D</div><div class="opt-text" id="textD"></div></div>
+        </div>
+
+        <div class="controls">
+          <button id="prevBtn" class="small" onclick="prevQuestion()">Prev</button>
+          <div style="flex:1"></div>
+          <button id="nextBtn" class="btn" onclick="nextQuestion()" disabled>Next</button>
+        </div>
+      </div>
+
+      <div id="results" class="results" style="display:none;">
+        <div class="score" id="finalScore">0 / 200</div>
+        <div class="detail" id="percentText">0%</div>
+        <button class="btn" onclick="restart()">Restart Quiz</button>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+/* ===== Quiz Data (200 easy car questions) ===== */
+/* Each entry: {question, A, B, C, D, answer} answer is "A"/"B"/"C"/"D" */
+const quizData = [
+{question:"Which car brand was originally founded to make aircraft engines and still uses a propeller in its logo?",A:"Rolls-Royce",B:"BMW",C:"Saab",D:"Subaru",answer:"B"},
+{question:"What does the name 'Lamborghini' literally mean in Italian?",A:"Little lamb",B:"Lightning bolt",C:"Golden bull",D:"Fast horse",answer:"A"},
+{question:"Which luxury brand was created as a result of Ferruccio Lamborghini being insulted by Enzo Ferrari?",A:"Maserati",B:"Pagani",C:"Lamborghini",D:"Koenigsegg",answer:"C"},
+{question:"What was Toyota's original business before making cars?",A:"Bicycles",B:"Motorcycles",C:"Automatic looms",D:"Ship engines",answer:"C"},
+{question:"Which brand's founder was rejected by Lamborghini for a job, leading him to create his own supercar company?",A:"Ferrari",B:"Pagani",C:"Koenigsegg",D:"McLaren",answer:"B"},
+{question:"What does 'Volkswagen' literally translate to in English?",A:"German car",B:"People's car",C:"Worker's car",D:"Quality car",answer:"B"},
+{question:"Which brand was the first to use a turbocharged engine in Formula 1?",A:"Ferrari",B:"Porsche",C:"Renault",D:"BMW",answer:"C"},
+{question:"What unusual material did McLaren first use in Formula 1 that revolutionized car construction?",A:"Aluminum",B:"Titanium",C:"Carbon fiber",D:"Magnesium",answer:"C"},
+{question:"Which brand's logo represents the propeller of an aircraft against a blue sky?",A:"Saab",B:"BMW",C:"Subaru",D:"Mitsubishi",answer:"B"},
+{question:"What does 'Audi' mean in Latin?",A:"Speed",B:"Listen",C:"Drive",D:"Power",answer:"B"},
+{question:"Which brand was originally called 'Horch' before changing its name?",A:"BMW",B:"Mercedes",C:"Audi",D:"Porsche",answer:"C"},
+{question:"What was Enzo Ferrari's original profession before founding Ferrari?",A:"Mechanic",B:"Race car driver",C:"Engineer",D:"Businessman",answer:"B"},
+{question:"Which brand's three-pointed star originally represented land, sea, and air transportation?",A:"BMW",B:"Mercedes-Benz",C:"Mitsubishi",D:"Chrysler",answer:"B"},
+{question:"What does 'Hyundai' mean in Korean?",A:"Fast movement",B:"Modern times",C:"Strong power",D:"New beginning",answer:"B"},
+{question:"Which brand was the first to mass-produce a car with a rotary engine?",A:"Mazda",B:"NSU",C:"Citroën",D:"Saab",answer:"A"},
+{question:"What unusual business did Peugeot operate before making cars?",A:"Bicycles only",B:"Coffee grinders and pepper mills",C:"Textiles",D:"Watches",answer:"B"},
+{question:"Which brand's founder famously said 'Any customer can have a car painted any color as long as it's black'?",A:"General Motors",B:"Chrysler",C:"Ford",D:"Dodge",answer:"C"},
+{question:"What does the Maserati trident logo represent?",A:"Neptune's trident from Bologna's fountain",B:"Three racing victories",C:"Three founding brothers",D:"Power over land, sea, air",answer:"A"},
+{question:"Which brand was originally a bicycle repair shop in Hamamatsu, Japan?",A:"Honda",B:"Yamaha",C:"Suzuki",D:"Kawasaki",answer:"C"},
+{question:"What was Rolls-Royce's original business partnership about?",A:"Aircraft engines",B:"Luxury goods",C:"One made cars, one sold them",D:"Marine engines",answer:"C"},
+{question:"Which brand's logo features a snake eating a human, representing the Visconti family crest?",A:"Ferrari",B:"Lamborghini",C:"Alfa Romeo",D:"Maserati",answer:"C"},
+{question:"What does 'Citroën' refer to in the founder's name?",A:"Lemon (citron in French)",B:"City dweller",C:"Speed",D:"Innovation",answer:"A"},
+{question:"Which brand was the first to offer a production car with four-wheel drive?",A:"Audi",B:"Subaru",C:"Jensen",D:"AMC",answer:"C"},
+{question:"What unusual feature did Tucker cars have that was ahead of its time?",A:"Air conditioning",B:"Third headlight that turned with steering",C:"Automatic transmission",D:"Power steering",answer:"B"},
+{question:"Which brand's founder was a watch repairman who started making car parts?",A:"Rolex",B:"Seiko",C:"Citizen",D:"Peugeot",answer:"D"},
+{question:"What does 'Škoda' mean in Czech?",A:"Speed",B:"Damage/pity",C:"Quality",D:"Innovation",answer:"B"},
+{question:"Which brand was originally founded to make sewing machines?",A:"Singer",B:"Peugeot",C:"Husqvarna",D:"Pfaff",answer:"B"},
+{question:"What was Bugatti's original nationality before becoming French?",A:"German",B:"Italian",C:"Austrian",D:"Swiss",answer:"B"},
+{question:"Which brand's logo represents the constellation Pleiades (Seven Sisters)?",A:"Mitsubishi",B:"Subaru",C:"Suzuki",D:"Isuzu",answer:"B"},
+{question:"What does 'Koenigsegg' mean in Swedish?",A:"King's edge",B:"Speed king",C:"Royal blade",D:"Crown jewel",answer:"A"},
+{question:"Which brand was the first to use a mid-engine layout in a production car?",A:"Ferrari",B:"Lamborghini",C:"Porsche",D:"Lotus",answer:"B"},
+{question:"What unusual material did the original Lotus Seven chassis use?",A:"Wood",B:"Aluminum",C:"Fiberglass",D:"Steel tubing",answer:"D"},
+{question:"Which brand's founder was nicknamed 'Il Commendatore'?",A:"Lamborghini",B:"Ferrari",C:"Maserati",D:"Pagani",answer:"B"},
+{question:"What does 'Pagani' refer to in the founder's background?",A:"Italian village",B:"Founder's surname (Argentine-Italian)",C:"Ancient Roman god",D:"Type of carbon fiber",answer:"B"},
+{question:"Which brand was the first to win Le Mans with a rotary engine?",A:"Mazda",B:"NSU",C:"Citroën",D:"Mercedes",answer:"A"},
+{question:"What was McLaren's original business before Formula 1?",A:"Road cars",B:"Racing only",C:"Aircraft parts",D:"Marine engines",answer:"B"},
+{question:"Which brand's logo represents a bull because the founder was born under Taurus?",A:"Ferrari",B:"Lamborghini",C:"Dodge",D:"Peugeot",answer:"B"},
+{question:"What does 'Rimac' represent in Croatian culture?",A:"Lightning",B:"Founder's surname",C:"Speed",D:"Innovation",answer:"B"},
+{question:"Which brand was originally called 'Bayerische Flugzeugwerke' (Bavarian Aircraft Works)?",A:"BMW",B:"Audi",C:"Mercedes",D:"Porsche",answer:"A"},
+{question:"What unusual business did Mitsubishi start with in 1870?",A:"Cars",B:"Shipping",C:"Electronics",D:"Textiles",answer:"B"},
+{question:"Which brand's founder created the company after being told his cars were 'too noisy' by Ferrari?",A:"Pagani",B:"Koenigsegg",C:"Lamborghini",D:"McLaren",answer:"C"},
+{question:"What does the Saab logo represent from Swedish heraldry?",A:"Griffin",B:"Lion",C:"Eagle",D:"Dragon",answer:"A"},
+{question:"Which brand was the first to use a boxer engine in a production car?",A:"Porsche",B:"Subaru",C:"Volkswagen",D:"Citroën",answer:"C"},
+{question:"What was Porsche's first production car?",A:"356",B:"550 Spyder",C:"911",D:"914",answer:"A"},
+{question:"Which brand's logo features a rampant lion holding a flag?",A:"Peugeot",B:"Citroën",C:"Renault",D:"Opel",answer:"A"},
+{question:"What does 'Daihatsu' mean in Japanese?",A:"Great engine",B:"Great development",C:"Small car",D:"Reliable motor",answer:"B"},
+{question:"Which brand was originally a motorcycle company founded by Soichiro?",A:"Yamaha",B:"Suzuki",C:"Kawasaki",D:"Honda",answer:"D"},
+{question:"What unusual feature did the original Mini have that saved space?",A:"Transverse engine",B:"No spare tire",C:"Folding seats",D:"External fuel tank",answer:"A"},
+{question:"Which brand's founder was a former Alfa Romeo engineer who left to start his own company?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Lancia",answer:"A"},
+{question:"What does 'Isuzu' refer to in Japanese?",A:"Fifty bells",B:"River name",C:"Mountain peak",D:"Strong wind",answer:"B"},
+{question:"Which brand was the first to use a diesel engine in a passenger car?",A:"Mercedes-Benz",B:"Peugeot",C:"Citroën",D:"Volkswagen",answer:"A"},
+{question:"What was Lotus founder Colin Chapman's famous design philosophy?",A:"Power is nothing without control",B:"Simplify and add lightness",C:"Form follows function",D:"Speed costs money",answer:"B"},
+{question:"Which brand's logo represents the red cross of Milan and the Visconti serpent?",A:"Ferrari",B:"Lamborghini",C:"Alfa Romeo",D:"Lancia",answer:"C"},
+{question:"What does 'Maybach' represent in German automotive history?",A:"Founder's surname (luxury heritage)",B:"Royal carriage maker",C:"Bavarian nobility",D:"Mercedes subsidiary",answer:"A"},
+{question:"Which brand was originally founded to make aircraft propellers?",A:"Saab",B:"BMW",C:"Subaru",D:"Kawasaki",answer:"A"},
+{question:"What unusual material did the DeLorean DMC-12 use for its body panels?",A:"Aluminum",B:"Stainless steel",C:"Carbon fiber",D:"Fiberglass",answer:"B"},
+{question:"Which brand's founder was inspired by a matador and named cars after bulls?",A:"Ferrari",B:"Lamborghini",C:"Pagani",D:"Koenigsegg",answer:"B"},
+{question:"What does 'Geely' mean in Chinese?",A:"Auspicious",B:"Fast",C:"Strong",D:"Modern",answer:"A"},
+{question:"Which brand was the first to offer a production car with gull-wing doors?",A:"DeLorean",B:"Mercedes-Benz",C:"Lamborghini",D:"Tesla",answer:"B"},
+{question:"What was Bentley's original business focus before luxury cars?",A:"Aircraft engines",B:"Marine engines",C:"Racing cars",D:"Luxury goods",answer:"A"},
+{question:"Which brand's logo represents a stylized version of the Eiffel Tower?",A:"Peugeot",B:"Citroën",C:"Renault",D:"Bugatti",answer:"B"},
+{question:"What does 'Acura' derive from in Latin?",A:"Accurate",B:"Accelerate",C:"Achieve",D:"Acquire",answer:"A"},
+{question:"Which brand was originally called 'Toyo Cork Kogyo'?",A:"Toyota",B:"Mazda",C:"Mitsubishi",D:"Subaru",answer:"B"},
+{question:"What unusual business did Rolls-Royce enter during WWII?",A:"Tanks",B:"Aircraft engines",C:"Submarines",D:"Radar systems",answer:"B"},
+{question:"Which brand's founder was a former racing driver who survived a near-fatal crash?",A:"McLaren",B:"Williams",C:"Lotus",D:"Ferrari",answer:"D"},
+{question:"What does 'Infiniti' represent in the brand's philosophy?",A:"Endless possibilities",B:"Infinite speed",C:"Perfect luxury",D:"Ultimate performance",answer:"A"},
+{question:"Which brand was the first to use a unibody construction in mass production?",A:"Citroën",B:"Lancia",C:"Chrysler",D:"Nash",answer:"A"},
+{question:"What was Jaguar originally called before changing its name?",A:"Swallow Sidecar Company",B:"British Sports Cars",C:"Coventry Motors",D:"English Racing Cars",answer:"A"},
+{question:"Which brand's logo represents three tuning forks?",A:"Yamaha",B:"Mitsubishi",C:"Suzuki",D:"Kawasaki",answer:"A"},
+{question:"What does 'Lexus' supposedly derive from?",A:"Luxury exports",B:"Legal luxury",C:"Luxury and elegance",D:"No specific meaning",answer:"D"},
+{question:"Which brand was originally a cork manufacturer?",A:"Toyota",B:"Mazda",C:"Honda",D:"Nissan",answer:"B"},
+{question:"What unusual feature did the Citroën DS have that was revolutionary?",A:"Hydropneumatic suspension",B:"Rotary engine",C:"Gull-wing doors",D:"Mid-engine layout",answer:"A"},
+{question:"Which brand's founder was nicknamed 'The Old Man' by his employees?",A:"Henry Ford",B:"Enzo Ferrari",C:"Ferdinand Porsche",D:"Ettore Bugatti",answer:"B"},
+{question:"What does 'Genesis' represent in Hyundai's luxury division?",A:"New beginning",B:"First creation",C:"Origin of luxury",D:"All of the above",answer:"D"},
+{question:"Which brand was the first to offer a production hybrid vehicle?",A:"Toyota",B:"Honda",C:"Ford",D:"General Motors",answer:"A"},
+{question:"What was Aston Martin originally called?",A:"Bamford & Martin",B:"British Racing Cars",C:"Aston Hill Motors",D:"Martin Sports Cars",answer:"A"},
+{question:"Which brand's logo represents a diamond shape from the Renault family crest?",A:"Citroën",B:"Peugeot",C:"Renault",D:"Bugatti",answer:"C"},
+{question:"What does 'Spyker' represent in Dutch automotive history?",A:"Wheel and propeller maker",B:"Bicycle manufacturer",C:"Aircraft company",D:"Luxury goods",answer:"A"},
+{question:"Which brand was originally founded to make fire engines?",A:"Mack",B:"Kenworth",C:"Peterbilt",D:"American LaFrance",answer:"D"},
+{question:"What unusual material did Trabant use for its body panels?",A:"Steel",B:"Aluminum",C:"Duroplast (cotton and resin)",D:"Fiberglass",answer:"C"},
+{question:"Which brand's founder was a former Fiat engineer who started his own company?",A:"Ferrari",B:"Lamborghini",C:"Lancia",D:"Alfa Romeo",answer:"C"},
+{question:"What does 'Qoros' represent in the brand's Chinese-European heritage?",A:"Quality and reliability",B:"Quick response",C:"Quantum leap",D:"No specific meaning",answer:"D"},
+{question:"Which brand was the first to use a flat-four engine in a rear-engine car?",A:"Porsche",B:"Volkswagen",C:"Tatra",D:"Citroën",answer:"B"},
+{question:"What was Morgan's original business before sports cars?",A:"Motorcycles",B:"Three-wheelers",C:"Bicycles",D:"Aircraft",answer:"B"},
+{question:"Which brand's logo represents a stylized 'A' that looks like a caliper?",A:"Acura",B:"Audi",C:"Alfa Romeo",D:"Aston Martin",answer:"A"},
+{question:"What does 'Mahindra' represent in Indian automotive history?",A:"Founder's surname",B:"Sanskrit word for strength",C:"Mountain peak",D:"Royal heritage",answer:"A"},
+{question:"Which brand was originally called 'Datsun' in international markets?",A:"Toyota",B:"Honda",C:"Nissan",D:"Mazda",answer:"C"},
+{question:"What unusual business did Ferrari operate alongside car manufacturing?",A:"Watches",B:"Clothing",C:"Tractors",D:"Machine tools",answer:"D"},
+{question:"Which brand's founder was inspired by aviation and named the company after a wind?",A:"Mistral",B:"Sirocco",C:"Zephyr",D:"Pagani",answer:"D"},
+{question:"What does 'Tata' represent in Indian business culture?",A:"Founder's surname",B:"Sanskrit word",C:"Regional dialect",D:"Family nickname",answer:"A"},
+{question:"Which brand was the first to offer a production car with active aerodynamics?",A:"Porsche",B:"Ferrari",C:"McLaren",D:"Bugatti",answer:"A"},
+{question:"What was Volvo's original product before cars?",A:"Trucks",B:"Ball bearings",C:"Ships",D:"Aircraft",answer:"B"},
+{question:"Which brand's logo represents a griffin from Scania's coat of arms?",A:"Saab",B:"Volvo",C:"Scania",D:"Koenigsegg",answer:"C"},
+{question:"What does 'Borgward' represent in German automotive revival?",A:"Historic brand reborn",B:"New German startup",C:"Chinese-owned revival",D:"Both A and C",answer:"D"},
+{question:"Which brand was originally a sewing machine manufacturer?",A:"Singer",B:"Husqvarna",C:"Pfaff",D:"All of the above",answer:"D"},
+{question:"What unusual feature did the BMW Isetta have for entry/exit?",A:"Gull-wing doors",B:"Front-opening door",C:"Sliding roof",D:"Rear hatch",answer:"B"},
+{question:"Which brand's founder was a former Lamborghini test driver?",A:"Pagani",B:"Koenigsegg",C:"Rimac",D:"Hennessey",answer:"A"},
+{question:"What does 'Lynk & Co' represent in Geely's strategy?",A:"Link and company",B:"Luxury and comfort",C:"Life and connectivity",D:"All of the above",answer:"D"},
+{question:"Which brand was the first to use a sequential manual transmission in a road car?",A:"Ferrari",B:"Lamborghini",C:"BMW",D:"Alfa Romeo",answer:"C"},
+{question:"What was Hispano-Suiza's original business?",A:"Aircraft engines",B:"Luxury cars only",C:"Military vehicles",D:"Marine engines",answer:"A"},
+{question:"Which brand's logo represents a rampant horse from Stuttgart's coat of arms?",A:"Ferrari",B:"Porsche",C:"Mercedes",D:"Maybach",answer:"B"},
+{question:"What does 'Rivian' derive from in the founder's vision?",A:"River + Indian",B:"Revolutionary + Vision",C:"Rival + Innovation",D:"No specific meaning",answer:"A"},
+{question:"Which brand was originally founded to make luxury carriages?",A:"Rolls-Royce",B:"Bentley",C:"Maybach",D:"Duesenberg",answer:"C"},
+{question:"What unusual material did the Lotus Elise use for its chassis?",A:"Carbon fiber",B:"Aluminum extrusion",C:"Steel space frame",D:"Magnesium",answer:"B"},
+{question:"Which brand's founder was nicknamed 'Il Drake' (The Dragon)?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Pagani",answer:"A"},
+{question:"What does 'Polestar' represent in Volvo's performance division?",A:"North Star navigation",B:"Performance star",C:"Polar exploration",D:"Electric future",answer:"A"},
+{question:"Which brand was the first to offer a production car with carbon fiber body?",A:"McLaren",B:"Ferrari",C:"Lamborghini",D:"Lotus",answer:"A"},
+{question:"What was Duesenberg's claim to fame in the 1930s?",A:"Fastest cars",B:"Most expensive cars",C:"Most powerful engines",D:"All of the above",answer:"D"},
+{question:"Which brand's logo represents a stylized version of the founder's signature?",A:"Ford",B:"Cadillac",C:"Lincoln",D:"Chrysler",answer:"A"},
+{question:"What does 'Lucid' represent in the electric vehicle market?",A:"Clear vision",B:"Bright future",C:"Transparent technology",D:"All of the above",answer:"D"},
+{question:"Which brand was originally called 'Swallow Sidecar Company'?",A:"Triumph",B:"Jaguar",C:"MG",D:"Austin",answer:"B"},
+{question:"What unusual business did Mitsubishi Heavy Industries NOT operate?",A:"Ships",B:"Aircraft",C:"Textiles",D:"Air conditioning",answer:"C"},
+{question:"Which brand's founder was a former bicycle racer?",A:"Peugeot",B:"Opel",C:"Both A and B",D:"Neither",answer:"C"},
+{question:"What does 'Fisker' represent in sustainable luxury?",A:"Founder's surname",B:"Fish + Whisker (ocean inspiration)",C:"Finnish design",D:"Future + Risk",answer:"A"},
+{question:"Which brand was the first to offer a production car with butterfly doors?",A:"Lamborghini",B:"McLaren",C:"Koenigsegg",D:"Pagani",answer:"A"},
+{question:"What was Packard's slogan that became automotive legend?",A:"Ask the man who owns one",B:"Standard of the world",C:"Precision crafted performance",D:"The ultimate driving machine",answer:"A"},
+{question:"Which brand's logo represents a stylized version of the Bavarian flag?",A:"BMW",B:"Audi",C:"Mercedes",D:"Porsche",answer:"A"},
+{question:"What does 'Canoo' represent in electric vehicle innovation?",A:"Canoe-like design",B:"Canadian origin",C:"Can + Do attitude",D:"Canvas + New",answer:"A"},
+{question:"Which brand was originally a manufacturer of precision instruments?",A:"Rolex",B:"Omega",C:"TAG Heuer",D:"Porsche Design",answer:"D"},
+{question:"What unusual feature did the Tucker 48 have that modern cars adopted decades later?",A:"Rear engine",B:"Safety cage",C:"Disc brakes",D:"Fuel injection",answer:"B"},
+{question:"Which brand's founder was inspired by a famous opera singer?",A:"Caruso",B:"Pavarotti",C:"Domingo",D:"None (trick question)",answer:"D"},
+{question:"What does 'Rimac' represent in Croatian innovation?",A:"Lightning bolt",B:"Founder's surname",C:"Speed in Croatian",D:"Electric power",answer:"B"},
+{question:"Which brand was the first to use a flat-12 engine in a road car?",A:"Ferrari",B:"Porsche",C:"Lamborghini",D:"Maserati",answer:"A"},
+{question:"What was Cord's revolutionary feature in the 1930s?",A:"Front-wheel drive",B:"Supercharged engine",C:"Retractable headlights",D:"All of the above",answer:"D"},
+{question:"Which brand's logo represents a stylized version of the founder's family crest?",A:"Maserati",B:"Alfa Romeo",C:"Lancia",D:"All of the above",answer:"D"},
+{question:"What does 'Nio' represent in Chinese electric vehicle culture?",A:"New + Innovation + Opportunity",B:"Blue sky in Chinese",C:"Next + Intelligence + Operation",D:"No specific meaning",answer:"B"},
+{question:"Which brand was originally founded to make steam cars?",A:"Stanley",B:"White",C:"Doble",D:"All of the above",answer:"D"},
+{question:"What unusual material did the Bricklin SV-1 use for safety?",A:"Steel roll cage",B:"Acrylic body panels",C:"Aluminum frame",D:"Carbon fiber reinforcement",answer:"B"},
+{question:"Which brand's founder was nicknamed 'The Wizard of Zuffenhausen'?",A:"Ferdinand Porsche",B:"Enzo Ferrari",C:"Ettore Bugatti",D:"Colin Chapman",answer:"A"},
+{question:"What does 'Xpeng' represent in Chinese EV innovation?",A:"X-factor + Penguin",B:"Explore + Penguin",C:"eXcellence + Peng (founder's name)",D:"No specific meaning",answer:"C"},
+{question:"Which brand was the first to offer a production car with active suspension?",A:"Citroën",B:"Mercedes",C:"BMW",D:"Audi",answer:"A"},
+{question:"What was Auburn's connection to the famous Duesenberg brand?",A:"Same owner (E.L. Cord)",B:"Same factory",C:"Same designer",D:"All of the above",answer:"D"},
+{question:"Which brand's logo represents a mythical creature from Lombard heraldry?",A:"Alfa Romeo",B:"Lancia",C:"Ferrari",D:"Maserati",answer:"A"},
+{question:"What does 'Li Auto' represent in Chinese EV market?",A:"Light + Automotive",B:"Founder Li Xiang's name",C:"Lithium + Auto",D:"Life + Innovation",answer:"B"},
+{question:"Which brand was originally called 'Fabrica Italiana Automobili Torino'?",A:"Ferrari",B:"Lancia",C:"Fiat",D:"Alfa Romeo",answer:"C"},
+{question:"What unusual business did Škoda operate before cars?",A:"Bicycles and motorcycles",B:"Arms manufacturing",C:"Both A and B",D:"Textiles only",answer:"C"},
+{question:"Which brand's founder was a former Bertone designer?",A:"Pagani",B:"Koenigsegg",C:"Rimac",D:"Spyker",answer:"A"},
+{question:"What does 'Faraday Future' represent in EV innovation?",A:"Michael Faraday + Future technology",B:"Far + Day (distant future)",C:"Fast + Ready",D:"Futuristic + Advanced",answer:"A"},
+{question:"Which brand was the first to offer a production car with a carbon fiber monocoque?",A:"McLaren",B:"Ferrari",C:"Lamborghini",D:"Pagani",answer:"A"},
+{question:"What was Stutz's famous racing slogan?",A:"The car that made good in a day",B:"America's sports car",C:"Built for speed",D:"Racing bred",answer:"A"},
+{question:"Which brand's logo represents a stylized version of the Celtic cross?",A:"Aston Martin",B:"Bentley",C:"Jaguar",D:"Land Rover",answer:"A"},
+{question:"What does 'Byton' represent in electric mobility?",A:"Bytes on wheels",B:"By + Ton (heavy technology)",C:"Battery + Proton",D:"Beyond + Photon",answer:"A"},
+{question:"Which brand was originally a manufacturer of kitchen scales?",A:"Peugeot",B:"Citroën",C:"Renault",D:"Simca",answer:"A"},
+{question:"What unusual feature did the Amphicar have that no modern car offers?",A:"Flying capability",B:"Amphibious operation",C:"Submarine mode",D:"Hovercraft function",answer:"B"},
+{question:"Which brand's founder was inspired by Norse mythology for the company name?",A:"Saab",B:"Volvo",C:"Koenigsegg",D:"Scania",answer:"C"},
+{question:"What does 'Karma' represent in luxury electric vehicles?",A:"Buddhist concept of cause and effect",B:"Indian founder's heritage",C:"Karmic justice for pollution",D:"All of the above",answer:"A"},
+{question:"Which brand was the first to offer a production car with laser headlights?",A:"BMW",B:"Audi",C:"Mercedes",D:"Porsche",answer:"B"},
+{question:"What was Edsel's connection to Ford that made it historically significant?",A:"Henry Ford's son's name",B:"Failed luxury division",C:"Revolutionary design",D:"All of the above",answer:"D"},
+{question:"Which brand's logo represents a stylized version of the ancient Roman god of war?",A:"Mars (doesn't exist)",B:"Ares Motors",C:"Vulcan (Aston Martin model)",D:"None of the above",answer:"D"},
+{question:"What does 'Arrival' represent in commercial EV innovation?",A:"Arriving at the future",B:"New arrival in market",C:"Arrival of electric age",D:"All interpretations valid",answer:"D"},
+{question:"Which brand was originally founded to make luxury yachts?",A:"Riva",B:"Azimut",C:"Ferretti",D:"None (all boat companies)",answer:"D"},
+{question:"What unusual material did the Reliant Robin use to keep costs low?",A:"Plastic body",B:"Fiberglass",C:"Aluminum",D:"Composite materials",answer:"B"},
+{question:"Which brand's founder was nicknamed 'The Magician' for his engineering prowess?",A:"Colin Chapman (Lotus)",B:"Ferdinand Porsche",C:"Enzo Ferrari",D:"Ettore Bugatti",answer:"A"},
+{question:"What does 'Mullen' represent in American EV manufacturing?",A:"Founder David Mullen's name",B:"Multiple + Energy",C:"Muscle + Electric",D:"Modern + Millennium",answer:"A"},
+{question:"Which brand was the first to offer a production car with a hybrid drivetrain?",A:"Toyota Prius",B:"Honda Insight",C:"Ford Escape Hybrid",D:"Lexus RX Hybrid",answer:"B"},
+{question:"What was Vector's claim to fame in the 1990s supercar world?",A:"Fastest acceleration",B:"Most advanced aerodynamics",C:"Highest top speed",D:"Most futuristic design",answer:"D"},
+{question:"Which brand's logo represents a stylized version of the founder's racing number?",A:"Shelby (doesn't use number)",B:"McLaren (doesn't use number)",C:"None use racing numbers",D:"All use racing heritage",answer:"C"},
+{question:"What does 'Lordstown' represent in American electric truck manufacturing?",A:"Lord + Town (nobility)",B:"Lordstown, Ohio location",C:"Leadership + Downtown",D:"Luxury + Ownership",answer:"B"},
+{question:"Which brand was originally called 'Società Anonima Lombarda Fabbrica Automobili'?",A:"Alfa Romeo",B:"Lancia",C:"Ferrari",D:"Maserati",answer:"A"},
+{question:"What unusual business did Tatra operate that influenced car design?",A:"Aircraft",B:"Trains",C:"Ships",D:"All transportation modes",answer:"B"},
+{question:"Which brand's founder was inspired by his son's death to create safer cars?",A:"Volvo",B:"Saab",C:"Mercedes",D:"BMW",answer:"A"},
+{question:"What does 'Workhorse' represent in commercial electric vehicles?",A:"Hard-working heritage",B:"Horse power reference",C:"Work + Horse combination",D:"All interpretations valid",answer:"D"},
+{question:"Which brand was the first to offer a production car with regenerative braking?",A:"Toyota",B:"Honda",C:"General Motors",D:"Ford",answer:"C"},
+{question:"What was Panoz's unique contribution to American sports car manufacturing?",A:"Aluminum space frame",B:"Esperante design",C:"Racing heritage",D:"All of the above",answer:"D"}
+];
+ // END quizData
+
+/* ===== Quiz Logic ===== */
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+const total = quizData.length;
+
+const qIndexEl = document.getElementById('qIndex');
+const questionText = document.getElementById('questionText');
+const progressBar = document.getElementById('progressBar');
+const scoreView = document.getElementById('scoreView');
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+const resultsEl = document.getElementById('results');
+const finalScore = document.getElementById('finalScore');
+const percentText = document.getElementById('percentText');
+
+const optEls = {
+  A: document.getElementById('optA'),
+  B: document.getElementById('optB'),
+  C: document.getElementById('optC'),
+  D: document.getElementById('optD')
+};
+const textEls = {
+  A: document.getElementById('textA'),
+  B: document.getElementById('textB'),
+  C: document.getElementById('textC'),
+  D: document.getElementById('textD')
+};
+
+/* Load question by index */
+function loadQuestion(idx){
+  const q = quizData[idx];
+  qIndexEl.innerText = idx + 1;
+  questionText.innerText = q.question;
+  textEls.A.innerText = q.A;
+  textEls.B.innerText = q.B;
+  textEls.C.innerText = q.C;
+  textEls.D.innerText = q.D;
+  updateProgress(idx);
+  // reset styles
+  ['A','B','C','D'].forEach(l=>{
+    optEls[l].classList.remove('selected','correct','wrong');
+    optEls[l].style.pointerEvents = 'auto';
+  });
+  answered = false;
+  nextBtn.disabled = true;
+  prevBtn.disabled = (idx===0);
+}
+
+/* Update progress bar and score display */
+function updateProgress(idx){
+  const pct = Math.round(((idx)/total)*100);
+  progressBar.style.width = pct + '%';
+  scoreView.innerText = `Score: ${score}`;
+}
+
+/* Option click handler */
+function handleOption(e){
+  if(answered) return;
+  const letter = this.getAttribute('data-letter');
+  const q = quizData[currentIndex];
+  answered = true;
+  // disable other options' pointer events
+  ['A','B','C','D'].forEach(l=> optEls[l].style.pointerEvents = 'none');
+  // mark selected
+  this.classList.add('selected');
+  // Check correct
+  if(letter === q.answer){
+    this.classList.add('correct');
+    score++;
+  } else {
+    this.classList.add('wrong');
+    // highlight correct
+    optEls[q.answer].classList.add('correct');
+  }
+  // enable next
+  nextBtn.disabled = false;
+  updateProgress(currentIndex);
+}
+
+/* Attach handlers */
+Object.values(optEls).forEach(el=> el.addEventListener('click', handleOption));
+
+/* Next question */
+function nextQuestion(){
+  if(!answered){
+    // do nothing until answered
+    return;
+  }
+  currentIndex++;
+  if(currentIndex >= total){
+    showResults();
+    return;
+  }
+  loadQuestion(currentIndex);
+}
+
+/* Previous question - does not change scoring (answers are not saved) */
+function prevQuestion(){
+  if(currentIndex === 0) return;
+  // simple behaviour: go back and don't change score (this keeps logic simple)
+  currentIndex--;
+  loadQuestion(currentIndex);
+}
+
+/* Show results */
+function showResults(){
+  document.getElementById('quizArea').style.display = 'none';
+  resultsEl.style.display = 'block';
+  finalScore.innerText = `${score} / ${total}`;
+  const pct = Math.round((score/total)*100);
+  percentText.innerText = `${pct}% correct — Great job!`;
+  progressBar.style.width = '100%';
+}
+
+/* Restart */
+function restart(){
+  currentIndex = 0;
+  score = 0;
+  resultsEl.style.display = 'none';
+  document.getElementById('quizArea').style.display = 'block';
+  loadQuestion(0);
+}
+
+/* Initialize */
+loadQuestion(0);
+
+/* Keyboard accessibility: 1-4 choose options, Enter for next if available */
+document.addEventListener('keydown', (e)=>{
+  if(e.key>='1' && e.key<='4'){
+    const map = {'1':'A','2':'B','3':'C','4':'D'};
+    const el = optEls[map[e.key]];
+    if(el) el.click();
+  } else if(e.key === 'Enter'){
+    if(!nextBtn.disabled) nextBtn.click();
+  } else if(e.key === 'ArrowRight'){
+    if(!nextBtn.disabled) nextBtn.click();
+  } else if(e.key === 'ArrowLeft'){
+    prevBtn.click();
+  }
+});
+</script>
+</body>
+</html>

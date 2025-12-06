@@ -1,0 +1,263 @@
+<!Doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bugatti Chiron Super Sport 300+ — Drive Nation</title>
+  <style>
+    /* RosyBrown Theme */
+    :root{
+      --bg: #fff7f7;
+      --card: #f3e6e6;
+      --accent: rosybrown;
+      --dark: #3b2f2f;
+      --muted: #6b5959;
+      --highlight: #c66b6b;
+      --radius: 12px;
+      --maxw: 900px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    body{
+      margin:0;
+      background: linear-gradient(180deg, var(--bg), #fff3f3 120px);
+      color: var(--dark);
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:36px 16px;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), var(--card));
+      border-radius:20px;
+      box-shadow: 0 10px 30px rgba(101,70,70,0.08);
+      overflow:hidden;
+      border: 1px solid rgba(196,130,130,0.12);
+    }
+
+    header{
+      background: linear-gradient(90deg, rgba(199,111,111,0.12), rgba(255,255,255,0.02));
+      padding:28px 32px;
+      display:flex;
+      gap:20px;
+      align-items:center;
+    }
+
+    .logo{
+      width:84px;
+      height:84px;
+      border-radius:14px;
+      background: linear-gradient(135deg, rgba(199,111,111,0.14), rgba(178,130,130,0.06));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      color:var(--dark);
+      box-shadow: 0 6px 18px rgba(200,120,120,0.06);
+      font-size:18px;
+    }
+
+    h1{
+      margin:0;
+      font-size:20px;
+      color:var(--dark);
+      letter-spacing:0.2px;
+    }
+
+    p.lead{
+      margin:6px 0 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .container{
+      padding:28px 32px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:20px;
+    }
+
+    .card{
+      background: white;
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow: 0 6px 18px rgba(120,90,90,0.04);
+      border: 1px solid rgba(200,140,140,0.06);
+    }
+
+    .meta{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-bottom:8px;
+    }
+
+    .badge{
+      background: linear-gradient(180deg, rgba(199,111,111,0.12), rgba(199,111,111,0.06));
+      color:var(--dark);
+      padding:6px 10px;
+      border-radius:8px;
+      font-weight:600;
+      font-size:13px;
+      border:1px solid rgba(199,111,111,0.06);
+    }
+
+    h2{
+      margin:4px 0 12px 0;
+      font-size:18px;
+      color:var(--dark);
+    }
+
+    ul.specs{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:10px;
+    }
+
+    ul.specs li{
+      background: linear-gradient(180deg, #fff, #fff7f7);
+      padding:10px;
+      border-radius:10px;
+      font-size:14px;
+      color:var(--muted);
+      border:1px solid rgba(200,140,140,0.04);
+    }
+
+    .history p{
+      margin:10px 0;
+      color:var(--muted);
+      line-height:1.5;
+      font-size:15px;
+    }
+
+    .cta{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-top:12px;
+    }
+
+    .btn{
+      background: var(--accent);
+      color:white;
+      padding:10px 14px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:700;
+      box-shadow: 0 6px 18px rgba(199,111,111,0.18);
+      border: none;
+      cursor:pointer;
+    }
+
+    .mutebtn{
+      background:transparent;
+      color:var(--muted);
+      border:1px solid rgba(120,90,90,0.06);
+      padding:8px 12px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    footer{
+      padding:20px 32px;
+      display:flex;
+      gap:20px;
+      align-items:center;
+      justify-content:space-between;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .image-wrap{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:18px;
+      border-radius:12px;
+      background: linear-gradient(180deg, #fff, #fff8f8);
+      border:1px solid rgba(200,140,140,0.04);
+    }
+
+    img.car{
+      max-width:100%;
+      height:auto;
+      border-radius:10px;
+      display:block;
+      box-shadow: 0 10px 30px rgba(120,80,80,0.06);
+    }
+
+    @media (min-width:720px){
+      .container{ gap:22px; }
+      ul.specs{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">Drive<br>Nation</div>
+      <div>
+        <h1>Bugatti Chiron Super Sport 300+</h1>
+        <p class="lead">A short history, key specs, and an image spot — built with a rosybrown theme.</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <section class="card">
+        <div class="meta">
+          <div class="badge">Limited edition</div>
+          <div class="badge">Top-speed focused</div>
+          <div class="badge">W16 engine</div>
+        </div>
+
+        <h2>Quick overview</h2>
+        <p class="lead" style="margin-top:4px;">
+          The Chiron Super Sport 300+ is Bugatti's extreme, limited-run derivative of the Chiron that celebrates the brand's 300+ mph achievement. It pairs immense power with aerodynamic changes and a distinctive lacquered carbon look with orange accents.
+        </p>
+      </section>
+
+      <section class="card history">
+        <h2>History — how it came to be</h2>
+        <p>
+          In 2019 Bugatti developed a special, high-speed derivative of the Chiron after a pre-production prototype exceeded 300 mph on the VW Ehra-Lessien test track. That record run and the engineering work behind it led Bugatti to produce the Chiron Super Sport 300+ as a strictly limited model for collectors.
+        </p>
+
+        <p>
+          The project required bespoke aerodynamics, modified gearing, upgraded engine output and specially developed tires; Bugatti worked with partners (including Dallara and Michelin) to make the car stable and safe at extreme speeds. The production Super Sport 300+ retained many of those changes while being adapted for customer use.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Key specifications</h2>
+        <ul class="specs">
+          <li><strong>Engine:</strong> 8.0L quad-turbo W16</li>
+          <li><strong>Power:</strong> ~1,578 bhp (1,600 PS in marketing figures)</li>
+          <li><strong>Top speed (prototype run):</strong> 304.77 mph (≈490.48 km/h)</li>
+          <li><strong>Production run:</strong> Extremely limited (30 customer cars announced)</li>
+          <li><strong>0–100 km/h:</strong> ~2.3 s (varies by source)</li>
+          <li><strong>Drive:</strong> All-wheel drive</li>
+          <li><strong>Body:</strong> Lacquered carbon fiber with signature stripes</li>
+          <li><strong>Approx price:</strong> Multi-million euros</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Why it matters</h2>
+        <p>
+          The Chiron Super Sport 300+ represents one of the pinnacles of internal-combustion hypercar engineering: combining raw power, precision aerodynamics and tire technology to push a road-legal production-based car beyond 300 mph. It is as much a demonstration of engineering capability and craftsmanship as it is a collectible car.
+        </p>
+<img src="C:\Users\Samue\Desktop\Sublime Text\Pictures for Supercar Websites\Chiron.jpg" alt="Aptera" width="800">
+    <footer>
+      <div>Designed by PixelForge Studios • Drive Nation</div>
+    </footer>
+  </div>
+</body>
+</html>

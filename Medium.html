@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Drive Nation — Ultimate Car Quiz (200 Qs)</title>
+<style>
+/* ===== RosyBrown Themed Quiz Styles ===== */
+:root{
+  --bg1: #fff7f7;
+  --rosy-1: #b98b8b;
+  --rosy-2: #d6b0b0;
+  --accent: #a66c6c;
+  --text: #3e1f1f;
+  --card: #ffffff;
+  --soft: rgba(188,143,143,0.12);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: "Inter", "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,var(--bg1), #fff0f0 60%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:28px 18px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  min-height:100vh;
+}
+
+/* Container */
+.wrapper{
+  width:100%;
+  max-width:980px;
+  background:linear-gradient(180deg, rgba(255,250,250,0.98), rgba(255,245,245,0.96));
+  border-radius:16px;
+  box-shadow: 0 18px 50px rgba(160,120,120,0.12);
+  padding:22px;
+  border: 1px solid rgba(188,143,143,0.12);
+}
+
+/* Header */
+.header{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+.brand {
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.logo{
+  width:56px;
+  height:56px;
+  border-radius:12px;
+  background: linear-gradient(135deg,var(--rosy-1),var(--rosy-2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:800;
+  font-size:18px;
+  box-shadow: 0 6px 18px rgba(169,110,110,0.18);
+}
+.title{
+  font-size:20px;
+  font-weight:700;
+  color:var(--accent);
+  letter-spacing:0.4px;
+}
+.subtitle{
+  font-size:13px;
+  color:#6a3b3b;
+  opacity:0.95;
+}
+
+/* Card */
+.card{
+  background:var(--card);
+  border-radius:14px;
+  padding:20px;
+  box-shadow: 0 10px 30px rgba(188,143,143,0.06);
+  border:1px solid rgba(188,143,143,0.06);
+}
+
+/* Intro */
+.intro{
+  margin-bottom:18px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+}
+.intro p{margin:0;font-size:15px;line-height:1.6;color:#4f2b2b}
+
+/* Quiz area */
+.quiz-top{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.qnum{
+  font-weight:700;
+  color:var(--accent);
+}
+.progress{
+  flex:1;
+  height:12px;
+  background:var(--soft);
+  border-radius:999px;
+  overflow:hidden;
+  margin-left:12px;
+  margin-right:12px;
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--rosy-1),var(--rosy-2));
+  border-radius:999px;
+  transition:width .35s ease;
+}
+
+/* Question text */
+.question{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:16px;
+  color:#4a2323;
+}
+
+/* Options */
+.options{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:12px;
+}
+.option{
+  background: linear-gradient(180deg,#fff0f0,#fff6f6);
+  border-radius:12px;
+  padding:14px 16px;
+  cursor:pointer;
+  border:1px solid rgba(188,143,143,0.18);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.option:hover{ transform:translateY(-4px); box-shadow:0 14px 30px rgba(188,143,143,0.08); }
+.opt-letter{
+  width:36px;height:36px;border-radius:10px;
+  background: linear-gradient(180deg,#f9dfdf,#ffecec);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--accent);
+  border:1px solid rgba(188,143,143,0.14);
+}
+.opt-text{font-size:16px;color:#4b2626}
+
+/* Selected / correct / wrong */
+.option.selected{ box-shadow:0 10px 26px rgba(168,110,110,0.12); }
+.option.correct{ background:linear-gradient(180deg,#e6f7ea,#d8f2db); border-color: rgba(80,170,100,0.18); }
+.option.wrong{ background:linear-gradient(180deg,#fde8e8,#fbdcdc); border-color: rgba(220,100,100,0.12); opacity:0.98; }
+
+/* Controls */
+.controls{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-top:16px;
+  justify-content:space-between;
+}
+.btn{
+  padding:10px 18px;
+  border-radius:12px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(90deg,var(--rosy-1),var(--rosy-2));
+  color:white;
+  box-shadow: 0 8px 22px rgba(169,110,110,0.15);
+}
+.btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; box-shadow:none; }
+.small{ background:transparent; color:var(--accent); font-weight:600; border-radius:10px; padding:8px 10px; border:1px solid rgba(188,143,143,0.08); }
+
+/* Footer / results */
+.results{
+  text-align:center;padding:18px;border-radius:12px;margin-top:12px;background:linear-gradient(180deg,#fffdfd,#fff6f6);border:1px solid rgba(188,143,143,0.06);
+}
+.score{
+  font-size:26px;font-weight:800;color:var(--accent);
+  margin-bottom:6px;
+}
+.detail{ color:#5b2f2f; margin-bottom:10px; }
+
+/* Responsive */
+@media (max-width:640px){
+  .question{ font-size:18px }
+  .brand .title{ font-size:18px }
+}
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="header">
+      <div class="brand">
+        <div class="logo">DN</div>
+        <div>
+          <div class="title">Drive Nation — Car Quiz</div>
+          <div class="subtitle">200 easy & fun car questions</div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:700;color:#6b3434">Test your car knowledge!</div>
+        <div style="font-size:12px;color:#7b4747">Tap an option to answer</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="intro">
+        <p><strong>Welcome!</strong> This quiz contains 200 simple and interesting car questions suitable for everyone. Each question has four options — pick the one you think is right. Your score will be shown at the end.</p>
+        <p>Have fun and learn as you go. Use the Next button to move forward. You can restart at any time.</p>
+      </div>
+
+      <div class="quiz-top">
+        <div class="qnum">Question <span id="qIndex">1</span> / 200</div>
+        <div class="progress" title="Progress">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <div style="min-width:90px;text-align:right;color:#6b3434;font-weight:700" id="scoreView">Score: 0</div>
+      </div>
+
+      <div id="quizArea">
+        <div id="questionText" class="question">Loading question...</div>
+        <div class="options">
+          <div id="optA" class="option" data-letter="A"><div class="opt-letter">A</div><div class="opt-text" id="textA"></div></div>
+          <div id="optB" class="option" data-letter="B"><div class="opt-letter">B</div><div class="opt-text" id="textB"></div></div>
+          <div id="optC" class="option" data-letter="C"><div class="opt-letter">C</div><div class="opt-text" id="textC"></div></div>
+          <div id="optD" class="option" data-letter="D"><div class="opt-letter">D</div><div class="opt-text" id="textD"></div></div>
+        </div>
+
+        <div class="controls">
+          <button id="prevBtn" class="small" onclick="prevQuestion()">Prev</button>
+          <div style="flex:1"></div>
+          <button id="nextBtn" class="btn" onclick="nextQuestion()" disabled>Next</button>
+        </div>
+      </div>
+
+      <div id="results" class="results" style="display:none;">
+        <div class="score" id="finalScore">0 / 200</div>
+        <div class="detail" id="percentText">0%</div>
+        <button class="btn" onclick="restart()">Restart Quiz</button>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+/* ===== Quiz Data (200 easy car questions) ===== */
+/* Each entry: {question, A, B, C, D, answer} answer is "A"/"B"/"C"/"D" */ 
+
+const quizData = [
+{question:"Which country is BMW originally from?",A:"Germany",B:"Italy",C:"Japan",D:"France",answer:"A"},
+{question:"What does BMW stand for?",A:"British Motor Works",B:"Bavarian Motor Works",C:"Berlin Motor Works",D:"Belgian Motor Works",answer:"B"},
+{question:"Which brand owns Lexus?",A:"Honda",B:"Nissan",C:"Toyota",D:"Mazda",answer:"C"},
+{question:"What is Ferrari's signature color?",A:"Blue",B:"Yellow",C:"Red",D:"Black",answer:"C"},
+{question:"Which brand makes the Mustang?",A:"Chevrolet",B:"Ford",C:"Dodge",D:"Plymouth",answer:"B"},
+{question:"What animal is on the Peugeot logo?",A:"Horse",B:"Bull",C:"Lion",D:"Eagle",answer:"C"},
+{question:"Which brand's logo features four interlocking rings?",A:"BMW",B:"Audi",C:"Mercedes",D:"Volkswagen",answer:"B"},
+{question:"What does VW stand for?",A:"Very Wide",B:"Volkswagen",C:"Victory Wheels",D:"Vintage Works",answer:"B"},
+{question:"Which brand makes the Civic?",A:"Toyota",B:"Nissan",C:"Honda",D:"Mazda",answer:"C"},
+{question:"What country is Volvo from?",A:"Norway",B:"Denmark",C:"Finland",D:"Sweden",answer:"D"},
+{question:"Which luxury brand is owned by Ford?",A:"Cadillac",B:"Lincoln",C:"Acura",D:"Infiniti",answer:"B"},
+{question:"What does the Mercedes-Benz three-pointed star represent?",A:"Land, sea, and air",B:"Past, present, future",C:"Speed, luxury, comfort",D:"Germany, quality, engineering",answer:"A"},
+{question:"Which brand makes the Camaro?",A:"Ford",B:"Dodge",C:"Chevrolet",D:"Plymouth",answer:"C"},
+{question:"What country is Lamborghini from?",A:"Germany",B:"Italy",C:"France",D:"Spain",answer:"B"},
+{question:"Which brand's slogan is 'The Ultimate Driving Machine'?",A:"Mercedes",B:"Audi",C:"BMW",D:"Porsche",answer:"C"},
+{question:"What does FIAT stand for?",A:"Fast Italian Automotive Technology",B:"Fabbrica Italiana Automobili Torino",C:"First Italian Auto Transport",D:"Fine Italian Automotive Tradition",answer:"B"},
+{question:"Which brand makes the Prius?",A:"Honda",B:"Nissan",C:"Toyota",D:"Hyundai",answer:"C"},
+{question:"What country is Hyundai from?",A:"Japan",B:"China",C:"South Korea",D:"Thailand",answer:"C"},
+{question:"Which brand owns Bentley?",A:"BMW",B:"Mercedes",C:"Audi",D:"Volkswagen",answer:"D"},
+{question:"What animal is featured on the Jaguar logo?",A:"Lion",B:"Jaguar",C:"Panther",D:"Tiger",answer:"B"},
+{question:"Which brand makes the 911?",A:"Ferrari",B:"Lamborghini",C:"Porsche",D:"Maserati",answer:"C"},
+{question:"What does KIA mean in Korean?",A:"Fast car",B:"Rising from Asia",C:"Korean Innovation Automotive",D:"Quality first",answer:"B"},
+{question:"Which brand's logo is a prancing horse?",A:"Lamborghini",B:"Ferrari",C:"Maserati",D:"Alfa Romeo",answer:"B"},
+{question:"What country is Škoda from?",A:"Poland",B:"Hungary",C:"Czech Republic",D:"Slovakia",answer:"C"},
+{question:"Which brand makes the Wrangler?",A:"Ford",B:"Chevrolet",C:"Dodge",D:"Jeep",answer:"D"},
+{question:"What does SAAB stand for?",A:"Swedish Automobile AB",B:"Svenska Aeroplan Aktiebolaget",C:"Scandinavian Auto Assembly Bureau",D:"Swedish Advanced Automotive Brand",answer:"B"},
+{question:"Which brand owns Maserati?",A:"Ferrari",B:"Lamborghini",C:"Stellantis",D:"BMW",answer:"C"},
+{question:"What country is Seat from?",A:"Italy",B:"Portugal",C:"Spain",D:"France",answer:"C"},
+{question:"Which brand makes the Outback?",A:"Subaru",B:"Toyota",C:"Honda",D:"Mazda",answer:"A"},
+{question:"What does the Alfa Romeo logo feature?",A:"Snake and cross",B:"Lion and crown",C:"Eagle and shield",D:"Horse and sword",answer:"A"},
+{question:"Which brand's headquarters is in Wolfsburg?",A:"BMW",B:"Mercedes",C:"Audi",D:"Volkswagen",answer:"D"},
+{question:"What country is Dacia from?",A:"Bulgaria",B:"Romania",C:"Serbia",D:"Croatia",answer:"B"},
+{question:"Which brand makes the Leaf electric car?",A:"Toyota",B:"Honda",C:"Nissan",D:"Mazda",answer:"C"},
+{question:"What does the Mitsubishi logo represent?",A:"Three diamonds",B:"Rising sun",C:"Mountain peak",D:"Three stars",answer:"A"},
+{question:"Which brand owns Bugatti?",A:"Ferrari",B:"Lamborghini",C:"Porsche",D:"Rimac",answer:"D"},
+{question:"What country is Koenigsegg from?",A:"Norway",B:"Denmark",C:"Sweden",D:"Finland",answer:"C"},
+{question:"Which brand makes the Giulia?",A:"Ferrari",B:"Maserati",C:"Alfa Romeo",D:"Lancia",answer:"C"},
+{question:"What does the Renault logo represent?",A:"Diamond",B:"Circle",C:"Triangle",D:"Square",answer:"A"},
+{question:"Which brand's slogan is 'Zoom-Zoom'?",A:"Honda",B:"Toyota",C:"Nissan",D:"Mazda",answer:"D"},
+{question:"What country is McLaren from?",A:"Germany",B:"Italy",C:"United Kingdom",D:"France",answer:"C"},
+{question:"Which brand makes the Defender?",A:"Jeep",B:"Land Rover",C:"Toyota",D:"Nissan",answer:"B"},
+{question:"What does the Citroën logo feature?",A:"Two chevrons",B:"Lion",C:"Eagle",D:"Crown",answer:"A"},
+{question:"Which brand owns Rolls-Royce?",A:"Volkswagen",B:"Mercedes",C:"BMW",D:"Audi",answer:"C"},
+{question:"What country is Tata Motors from?",A:"China",B:"Thailand",C:"India",D:"Malaysia",answer:"C"},
+{question:"Which brand makes the Veyron?",A:"Koenigsegg",B:"Pagani",C:"Bugatti",D:"McLaren",answer:"C"},
+{question:"What does the Opel logo feature?",A:"Lightning bolt",B:"Circle",C:"Diamond",D:"Star",answer:"A"},
+{question:"Which brand's slogan is 'Das Auto'?",A:"BMW",B:"Mercedes",C:"Audi",D:"Volkswagen",answer:"D"},
+{question:"What country is Geely from?",A:"Japan",B:"South Korea",C:"China",D:"Thailand",answer:"C"},
+{question:"Which brand makes the Continental GT?",A:"Rolls-Royce",B:"Bentley",C:"Aston Martin",D:"Jaguar",answer:"B"},
+{question:"What does the Suzuki 'S' logo represent?",A:"Speed",B:"Strength",C:"The letter S stylized",D:"Snake",answer:"C"},
+{question:"Which brand owns Mini?",A:"Volkswagen",B:"Mercedes",C:"BMW",D:"Audi",answer:"C"},
+{question:"What country is Proton from?",A:"Thailand",B:"Indonesia",C:"Malaysia",D:"Philippines",answer:"C"},
+{question:"Which brand makes the DB11?",A:"Bentley",B:"Rolls-Royce",C:"Jaguar",D:"Aston Martin",answer:"D"},
+{question:"What does the Holden logo feature?",A:"Lion rolling a stone",B:"Eagle",C:"Horse",D:"Crown",answer:"A"},
+{question:"Which brand's slogan is 'Vorsprung durch Technik'?",A:"BMW",B:"Mercedes",C:"Audi",D:"Porsche",answer:"C"},
+{question:"What country is Mahindra from?",A:"China",B:"India",C:"Thailand",D:"Malaysia",answer:"B"},
+{question:"Which brand makes the Chiron?",A:"Koenigsegg",B:"Pagani",C:"Bugatti",D:"McLaren",answer:"C"},
+{question:"What does the Isuzu logo represent?",A:"Mountain",B:"River",C:"The letter I",D:"Sun",answer:"C"},
+{question:"Which brand owns Ducati motorcycles?",A:"BMW",B:"Volkswagen",C:"Audi",D:"Lamborghini",answer:"C"},
+{question:"What country is Lada from?",A:"Poland",B:"Czech Republic",C:"Russia",D:"Ukraine",answer:"C"},
+{question:"Which brand makes the Huracán?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Pagani",answer:"B"},
+{question:"What does the Infiniti logo represent?",A:"Infinity symbol",B:"Mountain peak",C:"Road extending to horizon",D:"Circle",answer:"C"},
+{question:"Which brand's slogan is 'The Power of Dreams'?",A:"Toyota",B:"Honda",C:"Nissan",D:"Mazda",answer:"B"},
+{question:"What country is Chery from?",A:"Japan",B:"South Korea",C:"China",D:"Thailand",answer:"C"},
+{question:"Which brand makes the Vantage?",A:"Jaguar",B:"Bentley",C:"Rolls-Royce",D:"Aston Martin",answer:"D"},
+{question:"What does the Acura logo represent?",A:"Stylized 'A'",B:"Caliper",C:"Diamond",D:"Wing",answer:"B"},
+{question:"Which brand owns Lotus?",A:"Geely",B:"Tata",C:"Mahindra",D:"BYD",answer:"A"},
+{question:"What country is Great Wall Motors from?",A:"Japan",B:"South Korea",C:"China",D:"India",answer:"C"},
+{question:"Which brand makes the Levante?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Alfa Romeo",answer:"C"},
+{question:"What does the Genesis logo represent?",A:"Wings",B:"Shield",C:"Crest",D:"Hexagon",answer:"A"},
+{question:"Which brand's slogan is 'Innovation that Excites'?",A:"Honda",B:"Toyota",C:"Nissan",D:"Mazda",answer:"C"},
+{question:"What country is BYD from?",A:"Japan",B:"South Korea",C:"China",D:"Thailand",answer:"C"},
+{question:"Which brand makes the Panamera?",A:"BMW",B:"Mercedes",C:"Audi",D:"Porsche",answer:"D"},
+{question:"What does the Lexus logo represent?",A:"Stylized 'L'",B:"Diamond",C:"Oval",D:"Circle",answer:"A"},
+{question:"Which brand owns Polestar?",A:"BMW",B:"Mercedes",C:"Volvo",D:"Audi",answer:"C"},
+{question:"What country is Borgward from?",A:"Austria",B:"Switzerland",C:"Germany",D:"Netherlands",answer:"C"},
+{question:"Which brand makes the Stelvio?",A:"Ferrari",B:"Maserati",C:"Alfa Romeo",D:"Lancia",answer:"C"},
+{question:"What does the Cadillac logo feature?",A:"Crest and crown",B:"Eagle",C:"Star",D:"Shield",answer:"A"},
+{question:"Which brand's slogan is 'Go Further'?",A:"Chevrolet",B:"Ford",C:"Dodge",D:"Chrysler",answer:"B"},
+{question:"What country is Lynk & Co from?",A:"Sweden",B:"China",C:"Both Sweden and China",D:"Germany",answer:"C"},
+{question:"Which brand makes the Giulietta?",A:"Ferrari",B:"Maserati",C:"Alfa Romeo",D:"Fiat",answer:"C"},
+{question:"What does the Maybach logo represent?",A:"Two M's overlapping",B:"Crown",C:"Eagle",D:"Diamond",answer:"A"},
+{question:"Which brand owns Cupra?",A:"Volkswagen",B:"Seat",C:"Audi",D:"Škoda",answer:"B"},
+{question:"What country is Rimac from?",A:"Serbia",B:"Slovenia",C:"Croatia",D:"Bosnia",answer:"C"},
+{question:"Which brand makes the Urus?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Pagani",answer:"B"},
+{question:"What does the Daihatsu logo represent?",A:"Stylized 'D'",B:"Mountain",C:"Circle",D:"Diamond",answer:"A"},
+{question:"Which brand's slogan is 'Like a Rock'?",A:"Ford",B:"Chevrolet",C:"Dodge",D:"GMC",answer:"B"},
+{question:"What country is Spyker from?",A:"Belgium",B:"Netherlands",C:"Denmark",D:"Switzerland",answer:"B"},
+{question:"Which brand makes the Ghibli?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Alfa Romeo",answer:"C"},
+{question:"What does the Smart logo represent?",A:"Swatch Mercedes ART",B:"Small Mobility ART",C:"Swiss Micro ART",D:"Stylized 'S'",answer:"A"},
+{question:"Which brand owns Wuling?",A:"Geely",B:"BYD",C:"SAIC-GM",D:"Great Wall",answer:"C"},
+{question:"What country is Pagani from?",A:"Germany",B:"Italy",C:"France",D:"Spain",answer:"B"},
+{question:"Which brand makes the Taycan?",A:"BMW",B:"Mercedes",C:"Audi",D:"Porsche",answer:"D"},
+{question:"What does the Scion logo represent?",A:"Stylized 'S'",B:"Tuning fork",C:"Wave",D:"Circle",answer:"B"},
+{question:"Which brand's slogan is 'Engineered to Move the Human Spirit'?",A:"Honda",B:"Toyota",C:"Nissan",D:"Mazda",answer:"D"},
+{question:"What country is Haval from?",A:"Japan",B:"South Korea",C:"China",D:"Thailand",answer:"C"},
+{question:"Which brand makes the Zonda?",A:"Koenigsegg",B:"Pagani",C:"Bugatti",D:"McLaren",answer:"B"},
+{question:"What does the Daewoo logo represent?",A:"Flower",B:"Great universe",C:"Mountain",D:"Sun",answer:"A"},
+{question:"Which brand owns Peugeot?",A:"Renault",B:"Citroën",C:"Stellantis",D:"Volkswagen",answer:"C"},
+{question:"What country is Maruti Suzuki primarily sold in?",A:"Japan",B:"China",C:"India",D:"Thailand",answer:"C"},
+{question:"Which brand makes the Regera?",A:"Koenigsegg",B:"Pagani",C:"Bugatti",D:"McLaren",answer:"A"},
+{question:"What does the Ssangyong logo represent?",A:"Two dragons",B:"Mountain",C:"River",D:"Sun",answer:"A"},
+{question:"Which brand's slogan is 'Shift_'?",A:"Honda",B:"Toyota",C:"Nissan",D:"Mazda",answer:"C"},
+{question:"What country is Lynk & Co's parent company Geely from?",A:"Sweden",B:"China",C:"Germany",D:"Japan",answer:"B"},
+{question:"Which brand makes the Arteon?",A:"BMW",B:"Mercedes",C:"Audi",D:"Volkswagen",answer:"D"},
+{question:"What does the Lancia logo feature?",A:"Shield and spear",B:"Crown",C:"Eagle",D:"Lion",answer:"A"},
+{question:"Which brand owns Chrysler?",A:"Ford",B:"General Motors",C:"Stellantis",D:"Toyota",answer:"C"},
+{question:"What country is Hongqi from?",A:"Japan",B:"South Korea",C:"China",D:"Thailand",answer:"C"},
+{question:"Which brand makes the Huayra?",A:"Koenigsegg",B:"Pagani",C:"Bugatti",D:"McLaren",answer:"B"},
+{question:"What does the Pontiac logo traditionally feature?",A:"Arrowhead",B:"Eagle",C:"Star",D:"Shield",answer:"A"},
+{question:"Which brand's slogan was 'Built Ford Tough'?",A:"Chevrolet",B:"Ford",C:"Dodge",D:"GMC",answer:"B"},
+{question:"What country is Qoros from?",A:"Japan",B:"South Korea",C:"China",D:"Germany",answer:"C"},
+{question:"Which brand makes the Cullinan?",A:"Bentley",B:"Rolls-Royce",C:"Jaguar",D:"Aston Martin",answer:"B"},
+{question:"What does the Oldsmobile logo feature?",A:"Rocket",B:"Eagle",C:"Star",D:"Shield",answer:"A"},
+{question:"Which brand owns Vauxhall?",A:"Ford",B:"Stellantis",C:"Volkswagen",D:"BMW",answer:"B"},
+{question:"What country is Nio from?",A:"Japan",B:"South Korea",C:"China",D:"Singapore",answer:"C"},
+{question:"Which brand makes the Gemera?",A:"Koenigsegg",B:"Pagani",C:"Bugatti",D:"McLaren",answer:"A"},
+{question:"What does the Plymouth logo feature?",A:"Mayflower ship",B:"Eagle",C:"Star",D:"Shield",answer:"A"},
+{question:"Which brand's slogan is 'Passion for Performance'?",A:"BMW",B:"Mercedes",C:"Audi",D:"Hyundai",answer:"D"},
+{question:"What country is Xpeng from?",A:"Japan",B:"South Korea",C:"China",D:"Taiwan",answer:"C"},
+{question:"Which brand makes the Senna?",A:"Ferrari",B:"Lamborghini",C:"McLaren",D:"Pagani",answer:"C"},
+{question:"What does the Mercury logo feature?",A:"Roman god Mercury",B:"Eagle",C:"Star",D:"Shield",answer:"A"},
+{question:"Which brand owns Hummer (electric version)?",A:"Ford",B:"General Motors",C:"Stellantis",D:"Toyota",answer:"B"},
+{question:"What country is Li Auto from?",A:"Japan",B:"South Korea",C:"China",D:"Taiwan",answer:"C"},
+{question:"Which brand makes the Speedtail?",A:"Ferrari",B:"Lamborghini",C:"McLaren",D:"Koenigsegg",answer:"C"},
+{question:"What does the Saturn logo represent?",A:"Planet Saturn",B:"Ring",C:"Circle",D:"Orbit",answer:"A"},
+{question:"Which brand's slogan is 'Expect More'?",A:"Kia",B:"Hyundai",C:"Genesis",D:"Ssangyong",answer:"A"},
+{question:"What country is Rivian from?",A:"Canada",B:"United States",C:"Germany",D:"Sweden",answer:"B"},
+{question:"Which brand makes the Artura?",A:"Ferrari",B:"Lamborghini",C:"McLaren",D:"Aston Martin",answer:"C"},
+{question:"What does the Eagle (automotive brand) logo feature?",A:"Eagle",B:"Wings",C:"Talon",D:"Feather",answer:"A"},
+{question:"Which brand owns Dodge?",A:"Ford",B:"General Motors",C:"Stellantis",D:"Toyota",answer:"C"},
+{question:"What country is Lucid Motors from?",A:"Canada",B:"United States",C:"Germany",D:"China",answer:"B"},
+{question:"Which brand makes the Centenario?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Pagani",answer:"B"},
+{question:"What does the Hummer logo represent?",A:"Military vehicle heritage",B:"Mountain",C:"Strength",D:"All terrain",answer:"A"},
+{question:"Which brand's slogan is 'Simply Clever'?",A:"Volkswagen",B:"Audi",C:"Škoda",D:"Seat",answer:"C"},
+{question:"What country is Fisker from?",A:"Denmark",B:"United States",C:"Germany",D:"Sweden",answer:"B"},
+{question:"Which brand makes the Evija?",A:"McLaren",B:"Lotus",C:"Aston Martin",D:"Jaguar",answer:"B"},
+{question:"What does the AMC logo stand for?",A:"American Motors Corporation",B:"Advanced Motor Company",C:"Automotive Manufacturing Corp",D:"American Muscle Cars",answer:"A"},
+{question:"Which brand owns Ram trucks?",A:"Ford",B:"General Motors",C:"Stellantis",D:"Toyota",answer:"C"},
+{question:"What country is Canoo from?",A:"Canada",B:"United States",C:"Netherlands",D:"Germany",answer:"B"},
+{question:"Which brand makes the Nevera?",A:"Koenigsegg",B:"Pagani",C:"Rimac",D:"McLaren",answer:"C"},
+{question:"What does the Studebaker logo feature?",A:"Wagon wheel",B:"Eagle",C:"Star",D:"Shield",answer:"A"},
+{question:"Which brand's slogan is 'Breakthrough'?",A:"Cadillac",B:"Lincoln",C:"Genesis",D:"Acura",answer:"A"},
+{question:"What country is Polestar originally engineered in?",A:"China",B:"Sweden",C:"Germany",D:"United Kingdom",answer:"B"},
+{question:"Which brand makes the Battista?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Pininfarina",answer:"D"},
+{question:"What does the Packard logo feature?",A:"Pelican",B:"Eagle",C:"Swan",D:"Crane",answer:"A"},
+{question:"Which brand owns Jeep?",A:"Ford",B:"General Motors",C:"Stellantis",D:"Toyota",answer:"C"},
+{question:"What country is Byton from?",A:"Germany",B:"China",C:"United States",D:"Japan",answer:"B"},
+{question:"Which brand makes the Valkyrie?",A:"McLaren",B:"Ferrari",C:"Aston Martin",D:"Pagani",answer:"C"},
+{question:"What does the Hudson logo feature?",A:"Triangle",B:"Circle",C:"Diamond",D:"Square",answer:"A"},
+{question:"Which brand's slogan is 'Precision Crafted Performance'?",A:"Infiniti",B:"Acura",C:"Lexus",D:"Genesis",answer:"B"},
+{question:"What country is Faraday Future from?",A:"China",B:"United States",C:"Germany",D:"Japan",answer:"B"},
+{question:"Which brand makes the One:1?",A:"Koenigsegg",B:"Pagani",C:"Bugatti",D:"McLaren",answer:"A"},
+{question:"What does the Nash logo feature?",A:"Shield",B:"Circle",C:"Diamond",D:"Star",answer:"A"},
+{question:"Which brand owns Cadillac?",A:"Ford",B:"General Motors",C:"Stellantis",D:"Toyota",answer:"B"},
+{question:"What country is Karma Automotive from?",A:"China",B:"United States",C:"Germany",D:"Japan",answer:"B"},
+{question:"Which brand makes the Centodieci?",A:"Ferrari",B:"Lamborghini",C:"Bugatti",D:"Pagani",answer:"C"},
+{question:"What does the Willys logo represent?",A:"Jeep heritage",B:"Eagle",C:"Star",D:"Shield",answer:"A"},
+{question:"Which brand's slogan is 'The Relentless Pursuit of Perfection'?",A:"Infiniti",B:"Acura",C:"Lexus",D:"Genesis",answer:"C"},
+{question:"What country is Mullen Automotive from?",A:"Canada",B:"United States",C:"Germany",D:"China",answer:"B"},
+{question:"Which brand makes the Jesko?",A:"Koenigsegg",B:"Pagani",C:"Bugatti",D:"McLaren",answer:"A"},
+{question:"What does the Kaiser logo feature?",A:"Eagle",B:"Crown",C:"Star",D:"Shield",answer:"A"},
+{question:"Which brand owns Buick?",A:"Ford",B:"General Motors",C:"Stellantis",D:"Toyota",answer:"B"},
+{question:"What country is Lordstown Motors from?",A:"Canada",B:"United States",C:"Germany",D:"China",answer:"B"},
+{question:"Which brand makes the Divo?",A:"Ferrari",B:"Lamborghini",C:"Bugatti",D:"Koenigsegg",answer:"C"},
+{question:"What does the Crosley logo feature?",A:"Circle",B:"Diamond",C:"Triangle",D:"Square",answer:"A"},
+{question:"Which brand's slogan is 'Dare Greatly'?",A:"Cadillac",B:"Lincoln",C:"Genesis",D:"Infiniti",answer:"D"},
+{question:"What country is Alpha Motor Corporation from?",A:"Canada",B:"United States",C:"Germany",D:"Japan",answer:"B"},
+{question:"Which brand makes the CC850?",A:"Koenigsegg",B:"Pagani",C:"Bugatti",D:"McLaren",answer:"A"},
+{question:"What does the Frazer logo feature?",A:"Shield",B:"Eagle",C:"Star",D:"Circle",answer:"A"},
+{question:"Which brand owns GMC?",A:"Ford",B:"General Motors",C:"Stellantis",D:"Toyota",answer:"B"},
+{question:"What country is Workhorse Group from?",A:"Canada",B:"United States",C:"Germany",D:"China",answer:"B"},
+{question:"Which brand makes the Eletre?",A:"McLaren",B:"Lotus",C:"Aston Martin",D:"Jaguar",answer:"B"},
+{question:"What does the DeSoto logo feature?",A:"Explorer's head",B:"Eagle",C:"Star",D:"Shield",answer:"A"},
+{question:"Which brand's slogan is 'That's Why'?",A:"Chevrolet",B:"Ford",C:"Dodge",D:"GMC",answer:"D"},
+{question:"What country is Atlis Motor Vehicles from?",A:"Canada",B:"United States",C:"Germany",D:"China",answer:"B"},
+{question:"Which brand makes the Purosangue?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Alfa Romeo",answer:"A"},
+{question:"What does the Edsel logo feature?",A:"E in circle",B:"Eagle",C:"Star",D:"Shield",answer:"A"},
+{question:"Which brand owns Chevrolet?",A:"Ford",B:"General Motors",C:"Stellantis",D:"Toyota",answer:"B"},
+{question:"What country is Bollinger Motors from?",A:"Canada",B:"United States",C:"Germany",D:"Sweden",answer:"B"},
+{question:"Which brand makes the Revuelto?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Pagani",answer:"B"},
+{question:"What does the Continental logo feature?",A:"Diamond",B:"Eagle",C:"Star",D:"Circle",answer:"A"},
+{question:"Which brand's slogan is 'Professional Grade'?",A:"Chevrolet",B:"Ford",C:"Dodge",D:"GMC",answer:"D"},
+{question:"What country is Canoo's headquarters located?",A:"Canada",B:"United States",C:"Netherlands",D:"Germany",answer:"B"},
+{question:"Which brand makes the Roma?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Alfa Romeo",answer:"A"},
+{question:"What does the LaSalle logo feature?",A:"Coat of arms",B:"Eagle",C:"Star",D:"Shield",answer:"A"},
+{question:"Which brand owns Opel?",A:"Volkswagen",B:"BMW",C:"Stellantis",D:"Ford",answer:"C"},
+{question:"What country is Arrival from?",A:"Germany",B:"United Kingdom",C:"United States",D:"Netherlands",answer:"B"},
+{question:"Which brand makes the 296 GTB?",A:"Ferrari",B:"Lamborghini",C:"Maserati",D:"Pagani",answer:"A"},
+{question:"What does the Terraplane logo feature?",A:"Airplane",B:"Eagle",C:"Star",D:"Globe",answer:"A"},
+{question:"Which brand's slogan is 'Find New Roads'?",A:"Chevrolet",B:"Ford",C:"Dodge",D:"GMC",answer:"A"},
+{question:"What country is Nikola Corporation from?",A:"Canada",B:"United States",C:"Germany",D:"Sweden",answer:"B"}
+];
+
+
+/* ===== Quiz Logic ===== */
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+const total = quizData.length;
+
+const qIndexEl = document.getElementById('qIndex');
+const questionText = document.getElementById('questionText');
+const progressBar = document.getElementById('progressBar');
+const scoreView = document.getElementById('scoreView');
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+const resultsEl = document.getElementById('results');
+const finalScore = document.getElementById('finalScore');
+const percentText = document.getElementById('percentText');
+
+const optEls = {
+  A: document.getElementById('optA'),
+  B: document.getElementById('optB'),
+  C: document.getElementById('optC'),
+  D: document.getElementById('optD')
+};
+const textEls = {
+  A: document.getElementById('textA'),
+  B: document.getElementById('textB'),
+  C: document.getElementById('textC'),
+  D: document.getElementById('textD')
+};
+
+/* Load question by index */
+function loadQuestion(idx){
+  const q = quizData[idx];
+  qIndexEl.innerText = idx + 1;
+  questionText.innerText = q.question;
+  textEls.A.innerText = q.A;
+  textEls.B.innerText = q.B;
+  textEls.C.innerText = q.C;
+  textEls.D.innerText = q.D;
+  updateProgress(idx);
+  // reset styles
+  ['A','B','C','D'].forEach(l=>{
+    optEls[l].classList.remove('selected','correct','wrong');
+    optEls[l].style.pointerEvents = 'auto';
+  });
+  answered = false;
+  nextBtn.disabled = true;
+  prevBtn.disabled = (idx===0);
+}
+
+/* Update progress bar and score display */
+function updateProgress(idx){
+  const pct = Math.round(((idx)/total)*100);
+  progressBar.style.width = pct + '%';
+  scoreView.innerText = `Score: ${score}`;
+}
+
+/* Option click handler */
+function handleOption(e){
+  if(answered) return;
+  const letter = this.getAttribute('data-letter');
+  const q = quizData[currentIndex];
+  answered = true;
+  // disable other options' pointer events
+  ['A','B','C','D'].forEach(l=> optEls[l].style.pointerEvents = 'none');
+  // mark selected
+  this.classList.add('selected');
+  // Check correct
+  if(letter === q.answer){
+    this.classList.add('correct');
+    score++;
+  } else {
+    this.classList.add('wrong');
+    // highlight correct
+    optEls[q.answer].classList.add('correct');
+  }
+  // enable nextyyyyyy
+  nextBtn.disabled = false;
+  updateProgress(currentIndex);
+}
+
+/* Attach handlers */
+Object.values(optEls).forEach(el=> el.addEventListener('click', handleOption));
+
+/* Next question */
+function nextQuestion(){
+  if(!answered){
+    // do nothing until answered
+    return;
+  }
+  currentIndex++;
+  if(currentIndex >= total){
+    showResults();
+    return;
+  }
+  loadQuestion(currentIndex);
+}
+
+/* Previous question - does not change scoring (answers are not saved) */
+function prevQuestion(){
+  if(currentIndex === 0) return;
+  // simple behaviour: go back and don't change score (this keeps logic simple)
+  currentIndex--;
+  loadQuestion(currentIndex);
+}
+
+/* Show results */
+function showResults(){
+  document.getElementById('quizArea').style.display = 'none';
+  resultsEl.style.display = 'block';
+  finalScore.innerText = `${score} / ${total}`;
+  const pct = Math.round((score/total)*100);
+  percentText.innerText = `${pct}% correct — Great job!`;
+  progressBar.style.width = '100%';
+}
+
+/* Restart */
+function restart(){
+  currentIndex = 0;
+  score = 0;
+  resultsEl.style.display = 'none';
+  document.getElementById('quizArea').style.display = 'block';
+  loadQuestion(0);
+}
+
+/* Initialize */
+loadQuestion(0);
+
+/* Keyboard accessibility: 1-4 choose options, Enter for next if available */
+document.addEventListener('keydown', (e)=>{
+  if(e.key>='1' && e.key<='4'){
+    const map = {'1':'A','2':'B','3':'C','4':'D'};
+    const el = optEls[map[e.key]];
+    if(el) el.click();
+  } else if(e.key === 'Enter'){
+    if(!nextBtn.disabled) nextBtn.click();
+  } else if(e.key === 'ArrowRight'){
+    if(!nextBtn.disabled) nextBtn.click();
+  } else if(e.key === 'ArrowLeft'){
+    prevBtn.click();
+  }
+});
+</script>
+</body>
+</html>

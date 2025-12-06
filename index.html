@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Nation</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    background: #fdf5f5;
+    color: #4b2e2e;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(90deg, #b98b8b, #d6b0b0);
+    padding: 25px;
+    text-align: center;
+    color: white;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+/* Intro text */
+.intro {
+    max-width: 750px;
+    margin: 40px auto;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+/* Card container */
+.cards {
+    max-width: 1000px;
+    margin: 40px auto 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    padding: 0 20px;
+}
+
+/* Each card */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    border: 1px solid rgba(188,143,143,0.4);
+    box-shadow: 0 8px 22px rgba(188,143,143,0.2);
+    text-align: center;
+    transition: 0.25s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 30px rgba(188,143,143,0.35);
+}
+
+/* Button */
+.card a {
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 18px;
+    padding: 12px 25px;
+    background: linear-gradient(90deg, #b98b8b, #d6b0b0);
+    color: white;
+    font-weight: 600;
+    border-radius: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">DriveNation Car Quiz</div>
+
+<div class="intro">
+    Welcome to <strong>Drive Nation Quiz</strong> — the home of knowledge, speed, and fun!  
+    Choose a quiz below and test how smart you really are.
+</div>
+
+<div class="cards">
+    <div class="card">
+        <h3>Easy Car Quiz</h3>
+        <p>All the easy car question that every one can answer</p>
+        <a href="easy.html">Start Quiz</a>
+    </div>
+
+    <div class="card">
+        <h3>Medium Car Quiz</h3>
+        <p>This is Medium which means only a few would answers</p>
+        <a href="Medium.html">Start Quiz</a>
+    </div>
+
+    <div class="card">
+        <h3>Hard Car Quiz</h3>
+        <p>Only those that have all the car knowledge will get it</p>
+        <a href="Hard.html">Start Quiz</a>
+    </div>
+</div>
+
+</body>
+</html>

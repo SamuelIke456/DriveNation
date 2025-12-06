@@ -1,0 +1,193 @@
+<!Doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DriveNation — Reports & News</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --rosybrown: #BC8F8F;
+      --rosy-600: #b07f7f;
+      --rosy-400: #d2a9a9;
+      --ivory: #fff8f6;
+      --muted: #6b5a5a;
+      --glass: rgba(255,255,255,0.12);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(188,143,143,0.12), transparent 10%),
+                  radial-gradient(800px 400px at 90% 90%, rgba(210,169,169,0.10), transparent 10%),
+                  linear-gradient(180deg, #fffdfa 0%, #fff6f5 100%);
+      color:var(--muted);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:48px;
+    }
+
+    .wrapper{
+      width:min(1100px, 96%);
+      border-radius:18px;
+      padding:28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+      box-shadow: 0 10px 30px rgba(139,115,115,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+      backdrop-filter: blur(6px);
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:22px;
+      align-items:start;
+    }
+
+    header{
+      grid-column:1 / -1;
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+
+    .logo{
+      width:64px;height:64px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      background: linear-gradient(135deg,var(--rosybrown),var(--rosy-400));
+      color:var(--ivory); font-weight:700; font-size:20px;
+      box-shadow: 0 8px 18px rgba(188,143,143,0.18);
+    }
+
+    h1{margin:0;font-size:20px;color:#5b4141}
+    p.lead{margin:0;color: #7a5d5d;font-size:14px}
+
+    .content{
+      padding-top:18px;
+      display:grid; grid-template-columns: repeat(2, 1fr); gap:18px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,250,250,0.85));
+      border-radius:14px; padding:20px; position:relative;
+      min-height:180px; overflow:hidden;
+      box-shadow: 0 8px 22px rgba(124,94,94,0.07);
+      border:1px solid rgba(188,143,143,0.06);
+      transition: transform .28s cubic-bezier(.2,.9,.24,1), box-shadow .28s;
+    }
+
+    .card:hover{transform:translateY(-8px) scale(1.01); box-shadow: 0 18px 40px rgba(124,94,94,0.12)}
+
+    .card .badge{
+      position:absolute; right:18px; top:18px; font-size:12px;
+      background:var(--rosy-400); color: #451f1f; padding:6px 10px; border-radius:999px;
+      box-shadow: 0 6px 14px rgba(188,143,143,0.08);
+    }
+
+    .card h2{margin:0 0 12px 0;color:#5a3f3f}
+    .card p{margin:0 0 14px 0; color:#6f5353}
+
+    .card .meta{display:flex;gap:10px;align-items:center;font-size:13px;color:#8e6e6e}
+
+    .card .cta{display:inline-block;margin-top:14px;padding:10px 14px;border-radius:10px;
+      background:linear-gradient(90deg,var(--rosybrown),var(--rosy-600)); color:white; text-decoration:none; font-weight:600;
+      box-shadow: 0 8px 18px rgba(176,127,127,0.12); transition: transform .18s;}
+    .card .cta:active{transform:translateY(1px)}
+
+    /* Right panel */
+    .aside{
+      display:flex;flex-direction:column; gap:16px;
+    }
+
+    .panel{
+      background: linear-gradient(180deg, rgba(188,143,143,0.06), rgba(210,169,169,0.03));
+      border-radius:12px; padding:14px; min-height:120px;
+      border:1px solid rgba(188,143,143,0.06);
+    }
+
+    .kpi{display:flex;gap:12px;align-items:center}
+    .kpi .num{font-size:22px;font-weight:700;color:#4b2f2f}
+    .kpi .label{font-size:13px;color:#7b5858}
+
+    /* Responsive */
+    @media (max-width:880px){
+      .wrapper{grid-template-columns: 1fr;}
+      .content{grid-template-columns:1fr}
+    }
+
+    /* Decorative SVG shapes */
+    .shape{
+      position:absolute; right:-60px; bottom:-60px; opacity:0.08; transform:rotate(18deg);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <header>
+      <div class="logo">DN</div>
+      <div>
+        <h1>DriveNation — Reports & News</h1>
+        <p class="lead">A warm, modern layout for highlights — About all the new and helpful info about cars and their companies.</p>
+      </div>
+    </header>
+
+    <main class="content">
+      <article class="card" aria-labelledby="reports-title">
+        <span class="badge">Top</span>
+        <h2 id="reports-title">Reports</h2>
+        <p>Deep-dive reports, analytics snapshots and featured long-reads. Clean typography and spacious cards help readers focus.</p>
+        <div class="meta">
+          <div>1 new</div>
+          <div>•</div>
+          <div>Updated today</div>
+        </div>
+
+         <a href="Report.html" style="text-decoration:none; color:inherit;">
+        <svg class="shape" width="220" height="220" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0" stop-color="#BC8F8F" stop-opacity="0.9" />
+              <stop offset="1" stop-color="#d2a9a9" stop-opacity="0.6" />
+            </linearGradient>
+          </defs>
+          <rect x="10" y="10" width="180" height="180" rx="32" fill="url(#g1)" />
+        </svg>
+      </article>
+
+      <a href="News.html" style="text-decoration:none; color:inherit;">
+      <article class="card" aria-labelledby="news-title">
+        <h2 id="news-title">News</h2>
+        <p>Quick headlines, breaking stories and trending snippets — optimized for scanning. Each card keeps the information punchy and visual.</p>
+        <div class="meta">
+          <div>0 headlines</div>
+          <div>•</div>
+          <div>Live updates</div>
+        </div>
+        <a class="cta" href="#">Read Latest →</a>
+      </article>
+    </main>
+
+    <aside class="aside">
+      <section class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="kpi"><div class="num">05tttt5t5</div><div class="label">Monthly Readers</div></div>
+            <div style="height:8px"></div>
+            <div class="kpi"><div class="num">0</div><div class="label">New Reports</div></div>
+          </div>
+          <div style="text-align:right;font-size:12px;color:#7a5d5d">Updated: <strong>Oct 23, 2025</strong></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h3 style="margin:0 0 8px 0;color:#5b3f3f">Quick Actions</h3>
+        <div style="display:flex;gap:8px">
+          <button style="flex:1;padding:10px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--rosy-400),var(--rosybrown));font-weight:600;color:white;">Create Report</button>
+          <button style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(188,143,143,0.12);background:transparent;color:#5b3f3f;font-weight:600;">Publish News</button>
+        </div>
+      </section>
+    </aside>
+
+  </div>
+</body>
+</html>
