@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DriveNation</title>
+
+<style>
+
+/* ===== GLOBAL PAGE STYLING ===== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    background: #fdf5f5;
+    color: #4b2e2e;
+}
+
+/* ===== HEADER ===== */
+.header {
+    background: linear-gradient(90deg, #b98b8b, #d6b0b0);
+    padding: 25px;
+    color: white;
+    text-align: center;
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+/* ===== INTRO SECTION ===== */
+.intro {
+    max-width: 850px;
+    margin: 50px auto;
+    padding: 0 20px;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #4b2e2e;
+}
+
+/* ===== CARD GRID ===== */
+.cards-container {
+    max-width: 1200px;
+    margin: 40px auto 70px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* ===== EACH CARD ===== */
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    border: 1px solid rgba(188,143,143,0.4);
+    box-shadow: 
+        0 8px 22px rgba(188,143,143,0.25),
+        0 4px 12px rgba(0,0,0,0.1);
+    transition: 0.3s ease-in-out;
+}
+
+/* Hover Animation */
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 
+        0 15px 35px rgba(188,143,143,0.4),
+        0 10px 18px rgba(0,0,0,0.12);
+}
+
+/* Card Title */
+.card h3 {
+    font-size: 24px;
+    margin-bottom: 12px;
+    color: #a66c6c;
+}
+
+/* Button */
+.card a {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 12px 25px;
+    background: linear-gradient(90deg, #b98b8b, #d6b0b0);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.card a:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(188,143,143,0.5);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    text-align: center;
+    padding: 25px;
+    background: #e5bcbc;
+    margin-top: 40px;
+    font-size: 16px;
+    color: #4b2e2e;
+}
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">DriveNation</div>
+
+<!-- INTRODUCTION -->
+<div class="intro">
+    <p>
+        Welcome to <strong>Drive Nation</strong>, the home of passionate car lovers from all around the world. 
+        Here, we celebrate performance, innovation and the irresistible thrill that comes with everything on four wheels.
+    </p>
+    <p>
+        Whether you're into supercars, classic rides, tuning, electric machines, or daily drivers, 
+        Drive Nation brings you a space to explore, learn, connect, and dive into the pure excitement of driving.
+    </p>
+</div>
+
+<!-- 7 CARDS SECTION -->
+<div class="cards-container">
+
+    <div class="card">
+        <h3>Car Match</h3>
+        <p>Find people who love the same cars you do and connect instantly.</p>
+        <a href="car-match-chat.html">Open Page</a>
+    </div>
+
+    <div class="card">
+        <h3>Community</h3>
+        <p>Join thousands of car enthusiasts sharing builds, ideas and discussions.</p>
+        <a href="car community.html">Open Page</a>
+    </div>
+
+    <div class="card">
+        <h3>Hyper Cars</h3>
+        <p>Explore the world of speed, luxury and high performance machines.</p>
+        <a href="TrackOnly.html">Open Page</a>
+    </div>
+
+    <div class="card">
+        <h3>Electric Cars</h3>
+        <p>Experience the future with EV innovations and insights.</p>
+        <a href="EV.html">Open Page</a>
+    </div>
+
+    <div class="card">
+        <h3>News and Reports</h3>
+        <p>View important news that could be beneficial to you.</p>
+        <a href="News and Reports.html">Open Page</a>
+    </div>
+
+    <div class="card">
+        <h3>Drive Nation Quiz and Games</h3>
+        <p>All the fun quiz games that give you something new to learn</p>
+        <a href="index.html">Open Page</a>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">© 2025 Drive Nation — Powered by PixelForge Studios</div>
+
+</body>
+</html>
