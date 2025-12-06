@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drivenation | Car Match Chat</title>
+  <style>
+    :root {
+      --rosybrown: #BC8F8F;
+      --dark: #0f0f10;
+      --muted: #bfbfbf;
+      --glass: rgba(255,255,255,0.05);
+      --accent: var(--rosybrown);
+    }
+    body {
+      font-family: Inter, sans-serif;
+      background: linear-gradient(180deg, #0b0b0d, #111);
+      color: #eee;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      background: rgba(188,143,143,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    h1 { font-size: 20px; margin: 0; color: var(--rosybrown); }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: var(--glass);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: transparent;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    button {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover { background: #a67878; }
+    .card {
+      background: rgba(255,255,255,0.03);
+      padding: 14px;
+      border-radius: 8px;
+      margin-top: 16px;
+    }
+    .match {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.04);
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .chat-box {
+      height: 240px;
+      overflow-y: auto;
+      background: rgba(0,0,0,0.25);
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .msg {
+      margin: 6px 0;
+    }
+    .msg.you { text-align: right; }
+    .msg .bubble {
+      display: inline-block;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Drivenation: Car Match Chat</h1>
+    <button onclick="logout()">Logout</button>
+  </header>
+
+  <div class="container" id="loginBox">
+    <h3>Login to Drivenation</h3>
+    <input id="username" placeholder="Enter your name">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div class="container" id="mainBox" style="display:none;">
+    <h2>Welcome, <span id="userDisplay"></span> 👋</h2>
+    <p>Enter your favorite car model:</p>
+    <input id="favCar" placeholder="e.g. Toyota Supra">
+    <button onclick="saveFavorite()">Save Favorite</button>
+
+    <div class="card">
+      <h3>People Who Like the Same Car</h3>
+      <div id="matchList" style="margin-top:10px; color: var(--muted);">No matches yet.</div>
+    </div>
+  </div>
+
+  <!-- Chat Modal -->
+  <div id="chatModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); align-items:center; justify-content:center;">
+    <div style="background:#111; padding:20px; border-radius:12px; width:90%; max-width:500px;">
+      <h3>Private Chat about <span id="chatCar"></span></h3>
+      <div class="chat-box" id="chatBox"></div>
+      <div style="display:flex; gap:8px;">
+        <input id="chatInput" placeholder="Type a message...">
+        <button onclick="sendChat()">Send</button>
+      </div>
+      <div style="text-align:right; margin-top:8px;">
+        <button onclick="closeChat()" style="background:transparent; border:1px solid rgba(255,255,255,0.2);">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ----------------------
+    // Data storage
+    // ----------------------
+    let user = localStorage.getItem('dn_user');
+    let favorites = JSON.parse(localStorage.getItem('dn_favorites') || '{}');
+    let chats = JSON.parse(localStorage.getItem('dn_chats') || '{}');
+
+    const loginBox = document.getElementById('loginBox');
+    const mainBox = document.getElementById('mainBox');
+    const matchList = document.getElementById('matchList');
+    const userDisplay = document.getElementById('userDisplay');
+
+    if (user) {
+      loginBox.style.display = 'none';
+      mainBox.style.display = 'block';
+      userDisplay.innerText = user;
+      renderMatches();
+    }
+
+    function login() {
+      const name = document.getElementById('username').value.trim();
+      if (!name) return alert('Enter your name');
+      user = name;
+      localStorage.setItem('dn_user', user);
+      loginBox.style.display = 'none';
+      mainBox.style.display = 'block';
+      userDisplay.innerText = user;
+    }
+
+    function logout() {
+      localStorage.removeItem('dn_user');
+      location.reload();
+    }
+
+    function saveFavorite() {
+      const car = document.getElementById('favCar').value.trim();
+      if (!car) return alert('Enter your favorite car!');
+      favorites[user] = car;
+      localStorage.setItem('dn_favorites', JSON.stringify(favorites));
+      renderMatches();
+    }
+
+    function renderMatches() {
+      const fav = favorites[user];
+      if (!fav) {
+        matchList.innerText = "You haven't added a favorite car yet.";
+        return;
+      }
+      let matches = Object.entries(favorites).filter(([u,c]) => u !== user && c.toLowerCase() === fav.toLowerCase());
+      if (matches.length === 0) {
+        matchList.innerText = "No one else likes " + fav + " yet.";
+      } else {
+        matchList.innerHTML = matches.map(([u,c]) =>
+          `<div class='match'>
+             <div><strong>${u}</strong> also likes ${c}</div>
+             <button onclick=\"openChat('${u}','${c}')\">Chat</button>
+           </div>`
+        ).join('');
+      }
+    }
+
+    // ----------------------
+    // Chat System
+    // ----------------------
+    let activeChatKey = null;
+    const chatModal = document.getElementById('chatModal');
+    const chatBox = document.getElementById('chatBox');
+    const chatCar = document.getElementById('chatCar');
+
+    function openChat(partner, car) {
+      activeChatKey = [user, partner].sort().join('_');
+      chatModal.style.display = 'flex';
+      chatCar.innerText = car + ' with ' + partner;
+      renderChat();
+    }
+
+    function closeChat() {
+      chatModal.style.display = 'none';
+      activeChatKey = null;
+    }
+
+    function sendChat() {
+      const text = document.getElementById('chatInput').value.trim();
+      if (!text) return;
+      if (!chats[activeChatKey]) chats[activeChatKey] = [];
+      chats[activeChatKey].push({ from: user, text, time: Date.now() });
+      localStorage.setItem('dn_chats', JSON.stringify(chats));
+      document.getElementById('chatInput').value = '';
+      renderChat();
+    }
+
+    function renderChat() {
+      chatBox.innerHTML = '';
+      const msgs = chats[activeChatKey] || [];
+      msgs.forEach(m => {
+        const div = document.createElement('div');
+        div.className = 'msg' + (m.from === user ? ' you' : '');
+        div.innerHTML = `<div class='bubble'><strong style='font-size:12px;'>${m.from}</strong><br>${m.text}</div>`;
+        chatBox.appendChild(div);
+      });
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+</body>
+</html>
